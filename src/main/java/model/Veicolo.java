@@ -1,11 +1,12 @@
 package model;
 
+
 public class Veicolo {
     private String targa;
     private String marca;
     private String modello;
     private int annoImmatricolazione;
-    private Utente proprietario; // Oggetto Utente invece della stringa email
+    private Utente proprietario;
 
     public Veicolo(String targa, String marca, String modello, int annoImmatricolazione, Utente proprietario) {
         this.targa = targa;
@@ -15,8 +16,7 @@ public class Veicolo {
         this.proprietario = proprietario;
     }
 
-    public Veicolo() {}
-
+    // --- GETTER E SETTER ---
     public String getTarga() { return targa; }
     public void setTarga(String targa) { this.targa = targa; }
 

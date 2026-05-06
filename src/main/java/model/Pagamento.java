@@ -1,14 +1,17 @@
 package model;
 
+import utilities.enums.StatoPagamento;
+import java.time.LocalDateTime;
+
 public class Pagamento {
     private int idPagamento;
-    private Prenotazione prenotazione; // Il pagamento è collegato a una prenotazione specifica
+    private Prenotazione prenotazione;
     private double importo;
-    private String metodo;
-    private String stato;
-    private String dataPagamento;
+    private String metodo; // Es: "Carta", "PayPal"
+    private StatoPagamento stato;
+    private LocalDateTime dataPagamento;
 
-    public Pagamento(int idPagamento, Prenotazione prenotazione, double importo, String metodo, String stato, String dataPagamento) {
+    public Pagamento(int idPagamento, Prenotazione prenotazione, double importo, String metodo, StatoPagamento stato, LocalDateTime dataPagamento) {
         this.idPagamento = idPagamento;
         this.prenotazione = prenotazione;
         this.importo = importo;
@@ -17,8 +20,15 @@ public class Pagamento {
         this.dataPagamento = dataPagamento;
     }
 
-    public Pagamento() {}
+    public Pagamento(Prenotazione prenotazione, double importo, String metodo, StatoPagamento stato, LocalDateTime dataPagamento) {
+        this.prenotazione = prenotazione;
+        this.importo = importo;
+        this.metodo = metodo;
+        this.stato = stato;
+        this.dataPagamento = dataPagamento;
+    }
 
+    // --- GETTER E SETTER ---
     public int getIdPagamento() { return idPagamento; }
     public void setIdPagamento(int idPagamento) { this.idPagamento = idPagamento; }
 
@@ -31,9 +41,9 @@ public class Pagamento {
     public String getMetodo() { return metodo; }
     public void setMetodo(String metodo) { this.metodo = metodo; }
 
-    public String getStato() { return stato; }
-    public void setStato(String stato) { this.stato = stato; }
+    public StatoPagamento getStato() { return stato; }
+    public void setStato(StatoPagamento stato) { this.stato = stato; }
 
-    public String getDataPagamento() { return dataPagamento; }
-    public void setDataPagamento(String dataPagamento) { this.dataPagamento = dataPagamento; }
+    public LocalDateTime getDataPagamento() { return dataPagamento; }
+    public void setDataPagamento(LocalDateTime dataPagamento) { this.dataPagamento = dataPagamento; }
 }

@@ -1,20 +1,20 @@
 package model;
 
+import utilities.enums.StatoViaggio;
+import java.time.LocalDateTime;
+
 public class Viaggio {
-    private int idViaggio; // Autogenerato dal DB
+    private int idViaggio;
     private String partenza;
     private String destinazione;
-    private String dataOra; // Usiamo String per semplicità, oppure java.time.LocalDateTime
+    private LocalDateTime dataOra; // Niente più String!
     private int postiDisponibili;
     private double prezzo;
-    private String stato;
-
-    // Al posto della semplice stringa "email_guidatore", inseriamo l'oggetto Utente
+    private StatoViaggio stato;    // Usiamo l'Enum super sicuro
     private Utente guidatore;
 
-    // Costruttore completo
-    public Viaggio(int idViaggio, String partenza, String destinazione, String dataOra,
-                   int postiDisponibili, double prezzo, String stato, Utente guidatore) {
+    public Viaggio(int idViaggio, String partenza, String destinazione, LocalDateTime dataOra,
+                   int postiDisponibili, double prezzo, StatoViaggio stato, Utente guidatore) {
         this.idViaggio = idViaggio;
         this.partenza = partenza;
         this.destinazione = destinazione;
@@ -25,9 +25,8 @@ public class Viaggio {
         this.guidatore = guidatore;
     }
 
-    // Costruttore senza ID (usato quando creiamo un viaggio nuovo prima di salvarlo nel DB)
-    public Viaggio(String partenza, String destinazione, String dataOra,
-                   int postiDisponibili, double prezzo, String stato, Utente guidatore) {
+    public Viaggio(String partenza, String destinazione, LocalDateTime dataOra,
+                   int postiDisponibili, double prezzo, StatoViaggio stato, Utente guidatore) {
         this.partenza = partenza;
         this.destinazione = destinazione;
         this.dataOra = dataOra;
@@ -47,8 +46,8 @@ public class Viaggio {
     public String getDestinazione() { return destinazione; }
     public void setDestinazione(String destinazione) { this.destinazione = destinazione; }
 
-    public String getDataOra() { return dataOra; }
-    public void setDataOra(String dataOra) { this.dataOra = dataOra; }
+    public LocalDateTime getDataOra() { return dataOra; }
+    public void setDataOra(LocalDateTime dataOra) { this.dataOra = dataOra; }
 
     public int getPostiDisponibili() { return postiDisponibili; }
     public void setPostiDisponibili(int postiDisponibili) { this.postiDisponibili = postiDisponibili; }
@@ -56,8 +55,8 @@ public class Viaggio {
     public double getPrezzo() { return prezzo; }
     public void setPrezzo(double prezzo) { this.prezzo = prezzo; }
 
-    public String getStato() { return stato; }
-    public void setStato(String stato) { this.stato = stato; }
+    public StatoViaggio getStato() { return stato; }
+    public void setStato(StatoViaggio stato) { this.stato = stato; }
 
     public Utente getGuidatore() { return guidatore; }
     public void setGuidatore(Utente guidatore) { this.guidatore = guidatore; }

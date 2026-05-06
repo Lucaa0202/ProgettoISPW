@@ -1,27 +1,35 @@
 package model;
 
+import java.time.LocalDateTime;
+
 public class Utente {
-    private String email;
+    private Credentials credentials; // Contiene email e password
     private String nome;
     private String cognome;
-    private String password;
     private String telefono;
+    private LocalDateTime dataRegistrazione;
 
-    // Costruttore
-    public Utente(String email, String nome, String cognome, String password, String telefono) {
-        this.email = email;
+    // Costruttore completo (usato quando estraiamo i dati completi dal DB)
+    public Utente(Credentials credentials, String nome, String cognome, String telefono, LocalDateTime dataRegistrazione) {
+        this.credentials = credentials;
         this.nome = nome;
         this.cognome = cognome;
-        this.password = password;
+        this.telefono = telefono;
+        this.dataRegistrazione = dataRegistrazione;
+    }
+
+    // Costruttore per le nuove registrazioni (dataRegistrazione è autogenerata dal DB)
+    public Utente(Credentials credentials, String nome, String cognome, String telefono) {
+        this.credentials = credentials;
+        this.nome = nome;
+        this.cognome = cognome;
         this.telefono = telefono;
     }
 
-    // Costruttore vuoto (spesso utile quando si estraggono i dati dal DB)
-    public Utente() {}
+    // --- Getters e Setters ---
 
-    // Getters e Setters
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public Credentials getCredentials() { return credentials; }
+    public void setCredentials(Credentials credentials) { this.credentials = credentials; }
 
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
@@ -29,9 +37,9 @@ public class Utente {
     public String getCognome() { return cognome; }
     public void setCognome(String cognome) { this.cognome = cognome; }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
-
     public String getTelefono() { return telefono; }
     public void setTelefono(String telefono) { this.telefono = telefono; }
+
+    public LocalDateTime getDataRegistrazione() { return dataRegistrazione; }
+    public void setDataRegistrazione(LocalDateTime dataRegistrazione) { this.dataRegistrazione = dataRegistrazione; }
 }

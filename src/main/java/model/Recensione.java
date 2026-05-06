@@ -1,15 +1,17 @@
 package model;
 
+import java.time.LocalDateTime;
+
 public class Recensione {
     private int idRecensione;
-    private Utente recensore; // Chi scrive la recensione
-    private Utente recensito; // Chi riceve la recensione
-    private Viaggio viaggio;  // Il viaggio di riferimento
-    private int voto;         // Da 1 a 5
+    private Utente recensore;
+    private Utente recensito;
+    private Viaggio viaggio;
+    private int voto;
     private String commento;
-    private String dataRecensione;
+    private LocalDateTime dataRecensione;
 
-    public Recensione(int idRecensione, Utente recensore, Utente recensito, Viaggio viaggio, int voto, String commento, String dataRecensione) {
+    public Recensione(int idRecensione, Utente recensore, Utente recensito, Viaggio viaggio, int voto, String commento, LocalDateTime dataRecensione) {
         this.idRecensione = idRecensione;
         this.recensore = recensore;
         this.recensito = recensito;
@@ -19,9 +21,16 @@ public class Recensione {
         this.dataRecensione = dataRecensione;
     }
 
-    public Recensione() {}
+    public Recensione(Utente recensore, Utente recensito, Viaggio viaggio, int voto, String commento, LocalDateTime dataRecensione) {
+        this.recensore = recensore;
+        this.recensito = recensito;
+        this.viaggio = viaggio;
+        this.voto = voto;
+        this.commento = commento;
+        this.dataRecensione = dataRecensione;
+    }
 
-    // Getters and Setters
+    // --- GETTER E SETTER ---
     public int getIdRecensione() { return idRecensione; }
     public void setIdRecensione(int idRecensione) { this.idRecensione = idRecensione; }
 
@@ -40,6 +49,6 @@ public class Recensione {
     public String getCommento() { return commento; }
     public void setCommento(String commento) { this.commento = commento; }
 
-    public String getDataRecensione() { return dataRecensione; }
-    public void setDataRecensione(String dataRecensione) { this.dataRecensione = dataRecensione; }
+    public LocalDateTime getDataRecensione() { return dataRecensione; }
+    public void setDataRecensione(LocalDateTime dataRecensione) { this.dataRecensione = dataRecensione; }
 }
