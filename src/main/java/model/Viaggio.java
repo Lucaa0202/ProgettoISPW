@@ -11,10 +11,10 @@ public class Viaggio {
     private int postiDisponibili;
     private double prezzo;
     private StatoViaggio stato;    // Usiamo l'Enum super sicuro
-    private Utente guidatore;
+    private String emailGuidatore;
 
     public Viaggio(int idViaggio, String partenza, String destinazione, LocalDateTime dataOra,
-                   int postiDisponibili, double prezzo, StatoViaggio stato, Utente guidatore) {
+                   int postiDisponibili, double prezzo, StatoViaggio stato, String emailGuidatore) {
         this.idViaggio = idViaggio;
         this.partenza = partenza;
         this.destinazione = destinazione;
@@ -22,18 +22,18 @@ public class Viaggio {
         this.postiDisponibili = postiDisponibili;
         this.prezzo = prezzo;
         this.stato = stato;
-        this.guidatore = guidatore;
+        this.emailGuidatore = emailGuidatore;
     }
 
     public Viaggio(String partenza, String destinazione, LocalDateTime dataOra,
-                   int postiDisponibili, double prezzo, StatoViaggio stato, Utente guidatore) {
+                   int postiDisponibili, double prezzo, StatoViaggio stato, String emailGuidatore) {
         this.partenza = partenza;
         this.destinazione = destinazione;
         this.dataOra = dataOra;
         this.postiDisponibili = postiDisponibili;
         this.prezzo = prezzo;
         this.stato = stato;
-        this.guidatore = guidatore;
+        this.emailGuidatore = emailGuidatore;
     }
 
     // --- GETTER E SETTER ---
@@ -58,6 +58,6 @@ public class Viaggio {
     public StatoViaggio getStato() { return stato; }
     public void setStato(StatoViaggio stato) { this.stato = stato; }
 
-    public Utente getGuidatore() { return guidatore; }
-    public void setGuidatore(Utente guidatore) { this.guidatore = guidatore; }
+    public String getEmailGuidatore() { return emailGuidatore; }
+    public void setEmailGuidatore(String emailGuidatore) { this.emailGuidatore = emailGuidatore; }
 }

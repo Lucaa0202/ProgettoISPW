@@ -6,6 +6,9 @@ import exceptions.DbOperationException;
 import java.util.List;
 
 public interface PrenotazioneDAO {
+
+    void eliminaPrenotazione(int idPrenotazione) throws DbOperationException;
+
     // Crea una nuova richiesta di prenotazione
     void inserisciPrenotazione(Prenotazione prenotazione) throws DbOperationException;
 

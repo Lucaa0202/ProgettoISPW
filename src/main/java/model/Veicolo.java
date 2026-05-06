@@ -1,19 +1,19 @@
 package model;
 
-
 public class Veicolo {
     private String targa;
     private String marca;
     private String modello;
     private int annoImmatricolazione;
-    private Utente proprietario;
+    private String emailProprietario; // <-- Appiattito! Niente più oggetto Utente
 
-    public Veicolo(String targa, String marca, String modello, int annoImmatricolazione, Utente proprietario) {
+    // Un solo costruttore: la targa la sappiamo fin dall'inizio, non la genera il database
+    public Veicolo(String targa, String marca, String modello, int annoImmatricolazione, String emailProprietario) {
         this.targa = targa;
         this.marca = marca;
         this.modello = modello;
         this.annoImmatricolazione = annoImmatricolazione;
-        this.proprietario = proprietario;
+        this.emailProprietario = emailProprietario;
     }
 
     // --- GETTER E SETTER ---
@@ -29,6 +29,6 @@ public class Veicolo {
     public int getAnnoImmatricolazione() { return annoImmatricolazione; }
     public void setAnnoImmatricolazione(int annoImmatricolazione) { this.annoImmatricolazione = annoImmatricolazione; }
 
-    public Utente getProprietario() { return proprietario; }
-    public void setProprietario(Utente proprietario) { this.proprietario = proprietario; }
+    public String getEmailProprietario() { return emailProprietario; }
+    public void setEmailProprietario(String emailProprietario) { this.emailProprietario = emailProprietario; }
 }

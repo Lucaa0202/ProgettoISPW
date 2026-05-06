@@ -4,27 +4,29 @@ import java.time.LocalDateTime;
 
 public class Recensione {
     private int idRecensione;
-    private Utente recensore;
-    private Utente recensito;
-    private Viaggio viaggio;
+    private String emailRecensore; // Appiattito
+    private String emailRecensito; // Appiattito
+    private int idViaggio;         // Appiattito
     private int voto;
     private String commento;
     private LocalDateTime dataRecensione;
 
-    public Recensione(int idRecensione, Utente recensore, Utente recensito, Viaggio viaggio, int voto, String commento, LocalDateTime dataRecensione) {
+    // Costruttore CON ID (dal Database)
+    public Recensione(int idRecensione, String emailRecensore, String emailRecensito, int idViaggio, int voto, String commento, LocalDateTime dataRecensione) {
         this.idRecensione = idRecensione;
-        this.recensore = recensore;
-        this.recensito = recensito;
-        this.viaggio = viaggio;
+        this.emailRecensore = emailRecensore;
+        this.emailRecensito = emailRecensito;
+        this.idViaggio = idViaggio;
         this.voto = voto;
         this.commento = commento;
         this.dataRecensione = dataRecensione;
     }
 
-    public Recensione(Utente recensore, Utente recensito, Viaggio viaggio, int voto, String commento, LocalDateTime dataRecensione) {
-        this.recensore = recensore;
-        this.recensito = recensito;
-        this.viaggio = viaggio;
+    // Costruttore SENZA ID (Nuova recensione creata dall'App)
+    public Recensione(String emailRecensore, String emailRecensito, int idViaggio, int voto, String commento, LocalDateTime dataRecensione) {
+        this.emailRecensore = emailRecensore;
+        this.emailRecensito = emailRecensito;
+        this.idViaggio = idViaggio;
         this.voto = voto;
         this.commento = commento;
         this.dataRecensione = dataRecensione;
@@ -34,14 +36,14 @@ public class Recensione {
     public int getIdRecensione() { return idRecensione; }
     public void setIdRecensione(int idRecensione) { this.idRecensione = idRecensione; }
 
-    public Utente getRecensore() { return recensore; }
-    public void setRecensore(Utente recensore) { this.recensore = recensore; }
+    public String getEmailRecensore() { return emailRecensore; }
+    public void setEmailRecensore(String emailRecensore) { this.emailRecensore = emailRecensore; }
 
-    public Utente getRecensito() { return recensito; }
-    public void setRecensito(Utente recensito) { this.recensito = recensito; }
+    public String getEmailRecensito() { return emailRecensito; }
+    public void setEmailRecensito(String emailRecensito) { this.emailRecensito = emailRecensito; }
 
-    public Viaggio getViaggio() { return viaggio; }
-    public void setViaggio(Viaggio viaggio) { this.viaggio = viaggio; }
+    public int getIdViaggio() { return idViaggio; }
+    public void setIdViaggio(int idViaggio) { this.idViaggio = idViaggio; }
 
     public int getVoto() { return voto; }
     public void setVoto(int voto) { this.voto = voto; }

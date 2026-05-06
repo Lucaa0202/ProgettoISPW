@@ -10,6 +10,8 @@ public interface PagamentoDAO {
     // Registra un nuovo tentativo di pagamento
     void inserisciPagamento(Pagamento pagamento) throws DbOperationException;
 
+    Pagamento trovaPagamentoPerId(int idPagamento) throws NoResultException;
+
     // Aggiorna lo stato (es. da IN_SOSPESO a COMPLETATO)
     void aggiornaStatoPagamento(int idPagamento, StatoPagamento nuovoStato) throws DbOperationException;
 

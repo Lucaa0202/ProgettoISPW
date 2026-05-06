@@ -5,23 +5,25 @@ import java.time.LocalDateTime;
 
 public class Pagamento {
     private int idPagamento;
-    private Prenotazione prenotazione;
+    private int idPrenotazione; // <-- Appiattito!
     private double importo;
     private String metodo; // Es: "Carta", "PayPal"
     private StatoPagamento stato;
     private LocalDateTime dataPagamento;
 
-    public Pagamento(int idPagamento, Prenotazione prenotazione, double importo, String metodo, StatoPagamento stato, LocalDateTime dataPagamento) {
+    // Costruttore CON ID (dal Database)
+    public Pagamento(int idPagamento, int idPrenotazione, double importo, String metodo, StatoPagamento stato, LocalDateTime dataPagamento) {
         this.idPagamento = idPagamento;
-        this.prenotazione = prenotazione;
+        this.idPrenotazione = idPrenotazione;
         this.importo = importo;
         this.metodo = metodo;
         this.stato = stato;
         this.dataPagamento = dataPagamento;
     }
 
-    public Pagamento(Prenotazione prenotazione, double importo, String metodo, StatoPagamento stato, LocalDateTime dataPagamento) {
-        this.prenotazione = prenotazione;
+    // Costruttore SENZA ID (Nuovo pagamento da inserire)
+    public Pagamento(int idPrenotazione, double importo, String metodo, StatoPagamento stato, LocalDateTime dataPagamento) {
+        this.idPrenotazione = idPrenotazione;
         this.importo = importo;
         this.metodo = metodo;
         this.stato = stato;
@@ -32,8 +34,8 @@ public class Pagamento {
     public int getIdPagamento() { return idPagamento; }
     public void setIdPagamento(int idPagamento) { this.idPagamento = idPagamento; }
 
-    public Prenotazione getPrenotazione() { return prenotazione; }
-    public void setPrenotazione(Prenotazione prenotazione) { this.prenotazione = prenotazione; }
+    public int getIdPrenotazione() { return idPrenotazione; }
+    public void setIdPrenotazione(int idPrenotazione) { this.idPrenotazione = idPrenotazione; }
 
     public double getImporto() { return importo; }
     public void setImporto(double importo) { this.importo = importo; }

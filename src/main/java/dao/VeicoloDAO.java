@@ -14,4 +14,6 @@ public interface VeicoloDAO {
 
     // Rimuove un veicolo dal sistema
     void rimuoviVeicolo(String targa) throws DbOperationException;
+
+    Veicolo trovaVeicoloPerTarga(String targa) throws NoResultException;
 }

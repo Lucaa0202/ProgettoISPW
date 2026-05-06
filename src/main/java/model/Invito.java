@@ -4,20 +4,22 @@ import utilities.enums.StatoInvito;
 
 public class Invito {
     private int idInvito;
-    private Viaggio viaggio;
-    private Utente passeggero;
+    private int idViaggio;           // <-- Appiattito!
+    private String emailPasseggero;  // <-- Appiattito!
     private StatoInvito stato;
 
-    public Invito(int idInvito, Viaggio viaggio, Utente passeggero, StatoInvito stato) {
+    // Costruttore CON ID (dal Database)
+    public Invito(int idInvito, int idViaggio, String emailPasseggero, StatoInvito stato) {
         this.idInvito = idInvito;
-        this.viaggio = viaggio;
-        this.passeggero = passeggero;
+        this.idViaggio = idViaggio;
+        this.emailPasseggero = emailPasseggero;
         this.stato = stato;
     }
 
-    public Invito(Viaggio viaggio, Utente passeggero, StatoInvito stato) {
-        this.viaggio = viaggio;
-        this.passeggero = passeggero;
+    // Costruttore SENZA ID (Nuovo invito creato)
+    public Invito(int idViaggio, String emailPasseggero, StatoInvito stato) {
+        this.idViaggio = idViaggio;
+        this.emailPasseggero = emailPasseggero;
         this.stato = stato;
     }
 
@@ -25,11 +27,11 @@ public class Invito {
     public int getIdInvito() { return idInvito; }
     public void setIdInvito(int idInvito) { this.idInvito = idInvito; }
 
-    public Viaggio getViaggio() { return viaggio; }
-    public void setViaggio(Viaggio viaggio) { this.viaggio = viaggio; }
+    public int getIdViaggio() { return idViaggio; }
+    public void setIdViaggio(int idViaggio) { this.idViaggio = idViaggio; }
 
-    public Utente getPasseggero() { return passeggero; }
-    public void setPasseggero(Utente passeggero) { this.passeggero = passeggero; }
+    public String getEmailPasseggero() { return emailPasseggero; }
+    public void setEmailPasseggero(String emailPasseggero) { this.emailPasseggero = emailPasseggero; }
 
     public StatoInvito getStato() { return stato; }
     public void setStato(StatoInvito stato) { this.stato = stato; }

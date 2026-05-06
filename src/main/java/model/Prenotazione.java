@@ -5,23 +5,23 @@ import java.time.LocalDateTime;
 
 public class Prenotazione {
     private int idPrenotazione;
-    private Utente passeggero;
-    private Viaggio viaggio;
+    private String emailPasseggero; // Al posto dell'oggetto Utente
+    private int idViaggio;
     private StatoPrenotazione stato; // Usiamo l'Enum
     private LocalDateTime dataPrenotazione; // Data moderna
 
-    public Prenotazione(int idPrenotazione, Utente passeggero, Viaggio viaggio, StatoPrenotazione stato, LocalDateTime dataPrenotazione) {
+    public Prenotazione(int idPrenotazione, String emailPasseggero, int idViaggio, StatoPrenotazione stato, LocalDateTime dataPrenotazione) {
         this.idPrenotazione = idPrenotazione;
-        this.passeggero = passeggero;
-        this.viaggio = viaggio;
+        this.emailPasseggero = emailPasseggero;
+        this.idViaggio = idViaggio;
         this.stato = stato;
         this.dataPrenotazione = dataPrenotazione;
     }
 
     // Costruttore senza ID per le nuove prenotazioni
-    public Prenotazione(Utente passeggero, Viaggio viaggio, StatoPrenotazione stato, LocalDateTime dataPrenotazione) {
-        this.passeggero = passeggero;
-        this.viaggio = viaggio;
+    public Prenotazione(String emailPasseggero, int idViaggio, StatoPrenotazione stato, LocalDateTime dataPrenotazione) {
+        this.emailPasseggero = emailPasseggero;
+        this.idViaggio = idViaggio;
         this.stato = stato;
         this.dataPrenotazione = dataPrenotazione;
     }
@@ -30,11 +30,11 @@ public class Prenotazione {
     public int getIdPrenotazione() { return idPrenotazione; }
     public void setIdPrenotazione(int idPrenotazione) { this.idPrenotazione = idPrenotazione; }
 
-    public Utente getPasseggero() { return passeggero; }
-    public void setPasseggero(Utente passeggero) { this.passeggero = passeggero; }
+    public String getEmailPasseggero() { return emailPasseggero; }
+    public void setEmailPasseggero(String emailPasseggero) { this.emailPasseggero = emailPasseggero; }
 
-    public Viaggio getViaggio() { return viaggio; }
-    public void setViaggio(Viaggio viaggio) { this.viaggio = viaggio; }
+    public int getIdViaggio() { return idViaggio; }
+    public void setIdViaggio(int idViaggio) { this.idViaggio = idViaggio; }
 
     public StatoPrenotazione getStato() { return stato; }
     public void setStato(StatoPrenotazione stato) { this.stato = stato; }
