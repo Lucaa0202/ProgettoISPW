@@ -1,11 +1,13 @@
 package patterns.factory;
 
 import dao.*;
-/* Scommenterai questi import man mano che creeremo i pacchetti
-import il.tuo.pacchetto.dao.demo.*;
-import il.tuo.pacchetto.dao.sql.*;
-import il.tuo.pacchetto.dao.json.*;
-*/
+import dao.full.sql.UtenteDAOSQL;
+import dao.full.sql.ViaggioDAOSQL;
+import dao.full.sql.PrenotazioneDAOSQL;
+import dao.full.sql.VeicoloDAOSQL;
+import dao.full.sql.PagamentoDAOSQL;
+import dao.full.sql.InvitoDAOSQL;
+import dao.full.sql.RecensioneDAOSQL;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +16,6 @@ import java.util.function.Supplier;
 
 public class FactoryDAO {
 
-    // Costruttore privato identico a quello del tuo amico
     private FactoryDAO() {}
 
     private static final String CONFIG_FILE = "config.properties";
@@ -30,7 +31,6 @@ public class FactoryDAO {
     private static InvitoDAO invitoDAO;
     private static RecensioneDAO recensioneDAO;
 
-    // Caricamento delle proprietà una sola volta
     private static void loadProperties() {
         try (InputStream input = FactoryDAO.class.getClassLoader().getResourceAsStream(CONFIG_FILE)) {
             if (input == null) {
@@ -38,12 +38,10 @@ public class FactoryDAO {
             }
             properties.load(input);
         } catch (IOException e) {
-            // Se in futuro replichi la classe "Printer" del tuo amico, puoi sostituire questa riga
             System.err.println("Error loading properties file: " + e.getMessage());
         }
     }
 
-    // Verifica che il tipo di persistenza sia valido
     private static String getPersistenceType() {
         if (properties.isEmpty()) {
             loadProperties();
@@ -55,15 +53,16 @@ public class FactoryDAO {
         return type;
     }
 
-    // Metodo generico per creare DAO (Esattamente identico al suo)
+    // Metodo aggiornato: se passi "null" per demo o json, ti avvisa senza far crashare Java
     private static <T> T createDAO(String type, Supplier<T> mysqlSupplier, Supplier<T> demoSupplier, Supplier<T> jsonSupplier) {
         return switch (type) {
             case "mysql" -> mysqlSupplier.get();
-            case "demo" -> demoSupplier.get();
+            case "demo" -> {
+                if (demoSupplier == null) throw new IllegalArgumentException("DAO Demo non ancora implementato.");
+                yield demoSupplier.get();
+            }
             case "json" -> {
-                if (jsonSupplier == null) {
-                    throw new IllegalArgumentException("DAO JSON non supportato.");
-                }
+                if (jsonSupplier == null) throw new IllegalArgumentException("DAO JSON non supportato/implementato.");
                 yield jsonSupplier.get();
             }
             default -> throw new IllegalArgumentException("Tipo di DAO non valido: " + type);
@@ -74,98 +73,49 @@ public class FactoryDAO {
 
     public static synchronized UtenteDAO getUtenteDAO() {
         if (utenteDAO == null) {
-            /* SCOMMENTARE QUANDO LE CLASSI SARANNO PRONTE
-            utenteDAO = createDAO(
-                    getPersistenceType(),
-                    UtenteDAOSQL::new,
-                    UtenteDAODemo::new,
-                    UtenteDAOJSON::getInstance // Usiamo getInstance per il JSON come faceva il tuo amico
-            );
-            */
+            utenteDAO = createDAO(getPersistenceType(), UtenteDAOSQL::new, null, null);
         }
         return utenteDAO;
     }
 
     public static synchronized ViaggioDAO getViaggioDAO() {
         if (viaggioDAO == null) {
-            /*
-            viaggioDAO = createDAO(
-                    getPersistenceType(),
-                    ViaggioDAOSQL::new,
-                    ViaggioDAODemo::new,
-                    null // Non supportato in JSON, come richiesto dai vincoli
-            );
-            */
+            viaggioDAO = createDAO(getPersistenceType(), ViaggioDAOSQL::new, null, null);
         }
         return viaggioDAO;
     }
 
     public static synchronized PrenotazioneDAO getPrenotazioneDAO() {
         if (prenotazioneDAO == null) {
-            /*
-            prenotazioneDAO = createDAO(
-                    getPersistenceType(),
-                    PrenotazioneDAOSQL::new,
-                    PrenotazioneDAODemo::new,
-                    null
-            );
-            */
+            prenotazioneDAO = createDAO(getPersistenceType(), PrenotazioneDAOSQL::new, null, null);
         }
         return prenotazioneDAO;
     }
 
     public static synchronized VeicoloDAO getVeicoloDAO() {
         if (veicoloDAO == null) {
-            /*
-            veicoloDAO = createDAO(
-                    getPersistenceType(),
-                    VeicoloDAOSQL::new,
-                    VeicoloDAODemo::new,
-                    null
-            );
-            */
+            veicoloDAO = createDAO(getPersistenceType(), VeicoloDAOSQL::new, null, null);
         }
         return veicoloDAO;
     }
 
     public static synchronized PagamentoDAO getPagamentoDAO() {
         if (pagamentoDAO == null) {
-            /*
-            pagamentoDAO = createDAO(
-                    getPersistenceType(),
-                    PagamentoDAOSQL::new,
-                    PagamentoDAODemo::new,
-                    null
-            );
-            */
+            pagamentoDAO = createDAO(getPersistenceType(), PagamentoDAOSQL::new, null, null);
         }
         return pagamentoDAO;
     }
 
     public static synchronized InvitoDAO getInvitoDAO() {
         if (invitoDAO == null) {
-            /*
-            invitoDAO = createDAO(
-                    getPersistenceType(),
-                    InvitoDAOSQL::new,
-                    InvitoDAODemo::new,
-                    null
-            );
-            */
+            invitoDAO = createDAO(getPersistenceType(), InvitoDAOSQL::new, null, null);
         }
         return invitoDAO;
     }
 
     public static synchronized RecensioneDAO getRecensioneDAO() {
         if (recensioneDAO == null) {
-            /*
-            recensioneDAO = createDAO(
-                    getPersistenceType(),
-                    RecensioneDAOSQL::new,
-                    RecensioneDAODemo::new,
-                    null
-            );
-            */
+            recensioneDAO = createDAO(getPersistenceType(), RecensioneDAOSQL::new, null, null);
         }
         return recensioneDAO;
     }
