@@ -6,13 +6,16 @@ public class RecensioneBean {
     private String commento;
     private String emailAutore;
     private String emailDestinatario;
+    private int idViaggio; // Aggiunto per coerenza con il Model
 
-    public RecensioneBean(int idRecensione, int voto, String commento, String emailAutore, String emailDestinatario) {
+    // Costruttore completo
+    public RecensioneBean(int idRecensione, int voto, String commento, String emailAutore, String emailDestinatario, int idViaggio) {
         this.idRecensione = idRecensione;
         this.voto = voto;
         this.commento = commento;
         this.emailAutore = emailAutore;
         this.emailDestinatario = emailDestinatario;
+        this.idViaggio = idViaggio;
     }
 
     public RecensioneBean() {}
@@ -32,4 +35,7 @@ public class RecensioneBean {
 
     public String getEmailDestinatario() { return emailDestinatario; }
     public void setEmailDestinatario(String emailDestinatario) { this.emailDestinatario = emailDestinatario; }
+
+    public int getIdViaggio() { return idViaggio; }
+    public void setIdViaggio(int idViaggio) { this.idViaggio = idViaggio; }
 }

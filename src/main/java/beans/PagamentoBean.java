@@ -7,24 +7,18 @@ public class PagamentoBean {
     private int idPagamento;
     private int idPrenotazione;
     private double importo;
+    private String metodo; // <-- Aggiunto!
     private LocalDateTime dataPagamento;
     private StatoPagamento stato;
 
     // Costruttore completo
-    public PagamentoBean(int idPagamento, int idPrenotazione, double importo, LocalDateTime dataPagamento, StatoPagamento stato) {
+    public PagamentoBean(int idPagamento, int idPrenotazione, double importo, String metodo, LocalDateTime dataPagamento, StatoPagamento stato) {
         this.idPagamento = idPagamento;
         this.idPrenotazione = idPrenotazione;
         this.importo = importo;
+        this.metodo = metodo;
         this.dataPagamento = dataPagamento;
         this.stato = stato;
-    }
-
-    // Costruttore per un nuovo pagamento appena tentato
-    public PagamentoBean(int idPrenotazione, double importo, StatoPagamento stato) {
-        this.idPrenotazione = idPrenotazione;
-        this.importo = importo;
-        this.stato = stato;
-        this.dataPagamento = LocalDateTime.now(); // Imposta l'ora attuale
     }
 
     public PagamentoBean() {}
@@ -38,6 +32,9 @@ public class PagamentoBean {
 
     public double getImporto() { return importo; }
     public void setImporto(double importo) { this.importo = importo; }
+
+    public String getMetodo() { return metodo; }
+    public void setMetodo(String metodo) { this.metodo = metodo; }
 
     public LocalDateTime getDataPagamento() { return dataPagamento; }
     public void setDataPagamento(LocalDateTime dataPagamento) { this.dataPagamento = dataPagamento; }

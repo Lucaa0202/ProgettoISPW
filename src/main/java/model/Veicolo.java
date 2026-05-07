@@ -4,15 +4,15 @@ public class Veicolo {
     private String targa;
     private String marca;
     private String modello;
-    private int annoImmatricolazione;
+    private int postiTotali;
     private String emailProprietario; // <-- Appiattito! Niente più oggetto Utente
 
     // Un solo costruttore: la targa la sappiamo fin dall'inizio, non la genera il database
-    public Veicolo(String targa, String marca, String modello, int annoImmatricolazione, String emailProprietario) {
+    public Veicolo(String targa, String marca, String modello,int postiTotali ,  String emailProprietario) {
         this.targa = targa;
         this.marca = marca;
         this.modello = modello;
-        this.annoImmatricolazione = annoImmatricolazione;
+        this.postiTotali = postiTotali;
         this.emailProprietario = emailProprietario;
     }
 
@@ -26,9 +26,9 @@ public class Veicolo {
     public String getModello() { return modello; }
     public void setModello(String modello) { this.modello = modello; }
 
-    public int getAnnoImmatricolazione() { return annoImmatricolazione; }
-    public void setAnnoImmatricolazione(int annoImmatricolazione) { this.annoImmatricolazione = annoImmatricolazione; }
-
     public String getEmailProprietario() { return emailProprietario; }
     public void setEmailProprietario(String emailProprietario) { this.emailProprietario = emailProprietario; }
+
+    public int getPostiTotali() { return postiTotali; }
+    public void setPostiTotali(int postiTotali) { this.targa = targa; }
 }

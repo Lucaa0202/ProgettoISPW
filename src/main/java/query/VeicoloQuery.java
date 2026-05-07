@@ -19,7 +19,6 @@ public class VeicoloQuery {
             pstmt.setString(1, veicolo.getTarga());
             pstmt.setString(2, veicolo.getMarca());
             pstmt.setString(3, veicolo.getModello());
-            pstmt.setInt(4, veicolo.getAnnoImmatricolazione());
             pstmt.setString(5, veicolo.getEmailProprietario());
 
             int rs = pstmt.executeUpdate();

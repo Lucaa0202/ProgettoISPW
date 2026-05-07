@@ -1,7 +1,6 @@
 package dao.full.sql;
 
 import dao.PagamentoDAO;
-import dao.full.sql.ConnectionSQL;
 import exceptions.DbOperationException;
 import exceptions.NoResultException;
 import model.Pagamento;

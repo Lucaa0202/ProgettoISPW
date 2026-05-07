@@ -4,8 +4,6 @@ import dao.ViaggioDAO;
 import exceptions.DbOperationException;
 import exceptions.NoResultException;
 import model.Viaggio;
-import model.Utente;
-import model.Credentials;
 import query.ViaggioQuery;
 import utilities.enums.StatoViaggio;
 
