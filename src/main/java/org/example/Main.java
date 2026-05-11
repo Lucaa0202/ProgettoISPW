@@ -9,6 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 // Importa i tuoi file corretti se i pacchetti sono leggermente diversi
+import utilities.other.mappers.MapperRegistration;
 import utilities.other.mappers.Session;
 import view.gui.LoginGUI;
 
@@ -19,8 +20,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // 1. Registrazione dei mappers (scommentalo quando avrai la classe MapperRegistration)
-        // MapperRegistration.registerMappers();
+        // 1. Registrazione dei mappers
+         MapperRegistration.registerMappers();
 
         Scanner scanner = new Scanner(System.in);
         boolean validInput = false;
@@ -55,7 +56,7 @@ public class Main extends Application {
         launch(args);
     }
 
-    // --- METODO PER AVVIARE LA GRAFICA (GUI) ---
+    // --- METODO PER AVVIARE LA GRAFICA (GUI) ---q
     public void graphicInterface(Stage stage) throws IOException {
         // Inizializza la Sessione
         Session session = new Session();

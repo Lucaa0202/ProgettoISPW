@@ -12,6 +12,7 @@ import exceptions.EmptyFieldException;
 import exceptions.WrongEmailOrPasswordException;
 import utilities.other.mappers.Session;
 import view.gui.CommonGUI;
+import view.gui.RegistrationGUI;
 
 public class LoginGUI extends CommonGUI {
 
@@ -61,5 +62,11 @@ public class LoginGUI extends CommonGUI {
         if (email.getText().isEmpty() || password.getText().isEmpty()) {
             throw new EmptyFieldException("Compila tutti i campi.");
         }
+    }
+    @FXML
+    private void vaiARegistrazione(MouseEvent event) {
+        // Usa il motore di CommonGUI per cambiare pagina!
+        // NOTA: controlla che il percorso "/org/example/view/registrazione.fxml" sia corretto
+        cambiaSchermata(event, "/org/example/view/registrazione.fxml", new RegistrationGUI(session));
     }
 }

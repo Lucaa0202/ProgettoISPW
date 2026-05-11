@@ -1,18 +1,20 @@
 package beans;
 
 public class UtenteBean {
-    private CredenzialiBean credenziali; // <-- Composizione, proprio come il tuo amico!
+    private CredenzialiBean credenziali;
     private String nome;
     private String cognome;
+    private String telefono; // <--- AGGIUNTO
 
-    // Costruttore
-    public UtenteBean(CredenzialiBean credenziali, String nome, String cognome) {
+    // Costruttore con parametri (aggiornato per includere telefono)
+    public UtenteBean(CredenzialiBean credenziali, String nome, String cognome, String telefono) {
         this.credenziali = credenziali;
         this.nome = nome;
         this.cognome = cognome;
+        this.telefono = telefono; // <--- AGGIUNTO
     }
 
-    // Costruttore vuoto (può servire per alcuni framework grafici)
+    // Costruttore vuoto
     public UtenteBean() {}
 
     // --- GETTER E SETTER ---
@@ -38,5 +40,14 @@ public class UtenteBean {
 
     public void setCognome(String cognome) {
         this.cognome = cognome;
+    }
+
+    // --- NUOVI METODI PER IL TELEFONO ---
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

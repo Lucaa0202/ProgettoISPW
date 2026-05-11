@@ -60,6 +60,11 @@
                         </PasswordField>
 
                         <Text fx:id="error" fill="#ff0027" layoutX="316.0" layoutY="292.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Errore!" visible="false" />
+                        <Text fill="#005fb8" layoutX="278.0" layoutY="440.0" onMouseClicked="#vaiARegistrazione" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-cursor: hand;" text="Non hai un account? Registrati" underline="true">
+                            <font>
+                                <Font name="Segoe UI" size="15.0" />
+                            </font>
+                        </Text>
                     </children>
                 </AnchorPane>
             </center>
