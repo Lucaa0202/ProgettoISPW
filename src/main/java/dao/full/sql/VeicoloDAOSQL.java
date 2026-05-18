@@ -17,8 +17,9 @@ public class VeicoloDAOSQL implements VeicoloDAO {
     private static final String TARGA = "targa";
     private static final String MARCA = "marca";
     private static final String MODELLO = "modello";
-    private static final String ANNO_IMMATRICOLAZIONE = "anno_immatricolazione";
-    private static final String EMAIL_PROPRIETARIO = "email_proprietario";
+    private static final String POSTI_TOTALI = "posti_totali";
+    // Corretto con l'ortografia perfetta: proprietario_email
+    private static final String EMAIL_PROPRIETARIO = "proprietario_email";
 
     @Override
     public void inserisciVeicolo(Veicolo veicolo) throws DbOperationException {
@@ -83,7 +84,7 @@ public class VeicoloDAOSQL implements VeicoloDAO {
                 rs.getString(TARGA),
                 rs.getString(MARCA),
                 rs.getString(MODELLO),
-                rs.getInt(ANNO_IMMATRICOLAZIONE),
+                rs.getInt(POSTI_TOTALI),
                 rs.getString(EMAIL_PROPRIETARIO)
         );
     }

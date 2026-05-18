@@ -11,12 +11,10 @@ import controller.LoginController;
 import exceptions.EmptyFieldException;
 import exceptions.WrongEmailOrPasswordException;
 import utilities.other.mappers.Session;
-import view.gui.CommonGUI;
-import view.gui.RegistrationGUI;
 
 public class LoginGUI extends CommonGUI {
 
-    // COSTRUTTORE: Deve accettare SOLO la sessione per ora
+    // COSTRUTTORE: Deve accettare SOLO la sessione
     public LoginGUI(Session session) {
         super(session);
     }
@@ -43,10 +41,11 @@ public class LoginGUI extends CommonGUI {
             utenteBean.setCredenziali(credenzialiBean);
             loginController.retrieveUtente(utenteBean);
 
+            // 1. Salviamo l'utente loggato nella sessione
             session.setUser(utenteBean);
-            System.out.println("Login OK! Benvenuto " + utenteBean.getNome());
 
-            // Per ora stampiamo solo, poi aggiungeremo il cambio schermata
+            // 2. IL GRANDE SALTO VERSO LA HOMEPAGE!
+            cambiaSchermata(event, "/org/example/view/utenteHomepage.fxml", new UtenteHomepageGUI(session));
 
         } catch (WrongEmailOrPasswordException | EmptyFieldException e) {
             error.setText(e.getMessage());
@@ -63,10 +62,10 @@ public class LoginGUI extends CommonGUI {
             throw new EmptyFieldException("Compila tutti i campi.");
         }
     }
+
     @FXML
     private void vaiARegistrazione(MouseEvent event) {
-        // Usa il motore di CommonGUI per cambiare pagina!
-        // NOTA: controlla che il percorso "/org/example/view/registrazione.fxml" sia corretto
+        // Usa il motore di CommonGUI per cambiare pagina andando alla registrazione
         cambiaSchermata(event, "/org/example/view/registrazione.fxml", new RegistrationGUI(session));
     }
 }

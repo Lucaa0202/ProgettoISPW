@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="542.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.AggiungiVeicoloGUI">
+    <children>
+        <BorderPane prefHeight="542.0" prefWidth="762.0">
+            <top>
+                <AnchorPane prefHeight="78.0" prefWidth="762.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Text layoutX="260.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aggiungi il tuo Veicolo">
+                            <font>
+                                <Font name="Segoe UI Black" size="24.0" />
+                            </font>
+                        </Text>
+                        <Button layoutX="40.0" layoutY="25.0" mnemonicParsing="false" onMouseClicked="#tornaIndietro" prefHeight="35.0" prefWidth="80.0" style="-fx-background-radius: 22px; -fx-background-color: #efefef;" text="Indietro">
+                            <font><Font name="Segoe UI Semibold" size="14.0" /></font>
+                            <effect>
+                                <DropShadow blurType="GAUSSIAN" height="12.0" offsetY="1.0" radius="5.0" width="10.0">
+                                    <color><Color opacity="0.5" /></color>
+                                </DropShadow>
+                            </effect>
+                        </Button>
+                    </children>
+                </AnchorPane>
+            </top>
+            <center>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <TextField fx:id="marca" layoutX="271.0" layoutY="50.0" prefHeight="40.0" prefWidth="220.0" promptText="Es: Fiat" style="-fx-background-color: #f7f7f7; -fx-background-radius: 22px;">
+                            <effect><InnerShadow height="15.0" radius="7.0" width="15.0"><color><Color opacity="0.25" /></color></InnerShadow></effect>
+                        </TextField>
+                        <Text layoutX="290.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marca" />
+
+                        <TextField fx:id="modello" layoutX="271.0" layoutY="130.0" prefHeight="40.0" prefWidth="220.0" promptText="Es: Panda" style="-fx-background-color: #f7f7f7; -fx-background-radius: 22px;">
+                            <effect><InnerShadow height="15.0" radius="7.0" width="15.0"><color><Color opacity="0.25" /></color></InnerShadow></effect>
+                        </TextField>
+                        <Text layoutX="290.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modello" />
+
+                        <TextField fx:id="targa" layoutX="271.0" layoutY="210.0" prefHeight="40.0" prefWidth="220.0" promptText="Es: AB123CD" style="-fx-background-color: #f7f7f7; -fx-background-radius: 22px;">
+                            <effect><InnerShadow height="15.0" radius="7.0" width="15.0"><color><Color opacity="0.25" /></color></InnerShadow></effect>
+                        </TextField>
+                        <Text layoutX="290.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Targa" />
+
+                        <TextField fx:id="posti" layoutX="271.0" layoutY="290.0" prefHeight="40.0" prefWidth="220.0" promptText="Posti disponibili (es: 3)" style="-fx-background-color: #f7f7f7; -fx-background-radius: 22px;">
+                            <effect><InnerShadow height="15.0" radius="7.0" width="15.0"><color><Color opacity="0.25" /></color></InnerShadow></effect>
+                        </TextField>
+                        <Text layoutX="290.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Posti (escluso guidatore)" />
+
+                        <Button layoutX="311.0" layoutY="370.0" mnemonicParsing="false" onMouseClicked="#salvaVeicolo" prefHeight="50.0" prefWidth="140.0" style="-fx-background-radius: 22px; -fx-background-color: #efefef;" text="Salva Veicolo">
+                            <font><Font name="Segoe UI Bold" size="16.0" /></font>
+                            <effect>
+                                <DropShadow blurType="GAUSSIAN" height="12.0" offsetY="1.0" radius="5.0" width="10.0">
+                                    <color><Color opacity="0.5" /></color>
+                                </DropShadow>
+                            </effect>
+                        </Button>
+
+                        <Text fx:id="messaggio" fill="#ff0027" layoutX="250.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Errore" textAlignment="CENTER" visible="false" wrappingWidth="260.0">
+                            <font><Font name="Segoe UI" size="14.0" /></font>
+                        </Text>
+                    </children>
+                </AnchorPane>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>
