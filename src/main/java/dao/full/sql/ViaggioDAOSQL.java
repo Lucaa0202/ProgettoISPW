@@ -15,7 +15,9 @@ import java.util.List;
 
 public class ViaggioDAOSQL implements ViaggioDAO {
 
-    private static final String ID = "id";
+    // Nomi delle colonne del tuo DB MySQL
+    // NOTA: Se la colonna dell'ID su Workbench si chiama "idViaggio", cambia "id" in "idViaggio"!
+    private static final String ID = "idViaggio";
     private static final String PARTENZA = "partenza";
     private static final String DESTINAZIONE = "destinazione";
     private static final String DATA_ORA = "data_ora";
@@ -23,6 +25,8 @@ public class ViaggioDAOSQL implements ViaggioDAO {
     private static final String PREZZO = "prezzo";
     private static final String STATO = "stato";
     private static final String GUIDATORE_EMAIL = "guidatore_email";
+    // AGGIUNTO: il nome della colonna della targa su Workbench
+    private static final String VEICOLO_TARGA = "veicolo_targa";
 
     @Override
     public void inserisciViaggio(Viaggio viaggio) throws DbOperationException {
@@ -83,7 +87,7 @@ public class ViaggioDAOSQL implements ViaggioDAO {
     // --- METODI PRIVATI DI UTILITY ---
 
     private Viaggio mappaResultSetAViaggio(ResultSet rs) throws SQLException {
-        // NESSUN DUMMY! Passiamo direttamente la stringa, pulito e lineare.
+        // Ora i parametri sono 9, esattamente come vuole il costruttore del tuo Model!
         return new Viaggio(
                 rs.getInt(ID),
                 rs.getString(PARTENZA),
@@ -92,7 +96,8 @@ public class ViaggioDAOSQL implements ViaggioDAO {
                 rs.getInt(POSTI_DISPONIBILI),
                 rs.getDouble(PREZZO),
                 StatoViaggio.convertIntToState(rs.getInt(STATO)),
-                rs.getString(GUIDATORE_EMAIL)
+                rs.getString(GUIDATORE_EMAIL),
+                rs.getString(VEICOLO_TARGA) // <--- ECCO LA TARGA!
         );
     }
 

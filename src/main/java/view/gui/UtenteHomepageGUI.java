@@ -22,9 +22,9 @@ public class UtenteHomepageGUI extends CommonGUI {
 
     @FXML
     protected void offriPassaggio(MouseEvent event) {
-        // IL SALTO ALLA PAGINA DEL VEICOLO!
-        // Assicurati che il percorso del file fxml sia quello corretto
-        cambiaSchermata(event, "/org/example/view/aggiungiVeicolo.fxml", new AggiungiVeicoloGUI(session));
+        // Ora andiamo finalmente al form del Viaggio!
+        // (Assicurati che il percorso "/org/example/view/offriPassaggio.fxml" sia quello esatto in cui hai salvato il file)
+        cambiaSchermata(event, "/org/example/view/offriPassaggio.fxml", new OffriPassaggioGUI(session));
     }
 
     @FXML

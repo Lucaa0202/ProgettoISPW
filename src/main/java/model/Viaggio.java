@@ -7,14 +7,17 @@ public class Viaggio {
     private int idViaggio;
     private String partenza;
     private String destinazione;
-    private LocalDateTime dataOra; // Niente più String!
+    private LocalDateTime dataOra;
     private int postiDisponibili;
     private double prezzo;
-    private StatoViaggio stato;    // Usiamo l'Enum super sicuro
+    private StatoViaggio stato;
     private String emailGuidatore;
+    // --- NUOVO ATTRIBUTO ---
+    private String targaVeicolo;
 
+    // Costruttore COMPLETO (usato quando leggiamo dal Database)
     public Viaggio(int idViaggio, String partenza, String destinazione, LocalDateTime dataOra,
-                   int postiDisponibili, double prezzo, StatoViaggio stato, String emailGuidatore) {
+                   int postiDisponibili, double prezzo, StatoViaggio stato, String emailGuidatore, String targaVeicolo) {
         this.idViaggio = idViaggio;
         this.partenza = partenza;
         this.destinazione = destinazione;
@@ -23,10 +26,12 @@ public class Viaggio {
         this.prezzo = prezzo;
         this.stato = stato;
         this.emailGuidatore = emailGuidatore;
+        this.targaVeicolo = targaVeicolo;
     }
 
+    // Costruttore SENZA ID (usato quando creiamo un viaggio nuovo, l'ID lo mette MySQL)
     public Viaggio(String partenza, String destinazione, LocalDateTime dataOra,
-                   int postiDisponibili, double prezzo, StatoViaggio stato, String emailGuidatore) {
+                   int postiDisponibili, double prezzo, StatoViaggio stato, String emailGuidatore, String targaVeicolo) {
         this.partenza = partenza;
         this.destinazione = destinazione;
         this.dataOra = dataOra;
@@ -34,6 +39,7 @@ public class Viaggio {
         this.prezzo = prezzo;
         this.stato = stato;
         this.emailGuidatore = emailGuidatore;
+        this.targaVeicolo = targaVeicolo;
     }
 
     // --- GETTER E SETTER ---
@@ -60,4 +66,7 @@ public class Viaggio {
 
     public String getEmailGuidatore() { return emailGuidatore; }
     public void setEmailGuidatore(String emailGuidatore) { this.emailGuidatore = emailGuidatore; }
+
+    public String getTargaVeicolo() { return targaVeicolo; }
+    public void setTargaVeicolo(String targaVeicolo) { this.targaVeicolo = targaVeicolo; }
 }

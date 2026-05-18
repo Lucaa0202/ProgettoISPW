@@ -10,8 +10,12 @@ public class ViaggioBean {
     private LocalDateTime dataOraPartenza;
     private int postiDisponibili;
     private double contributoCondiviso;
+    // --- NUOVO ATTRIBUTO ---
+    private String targaVeicolo;
 
-    public ViaggioBean(int idViaggio, String emailGuidatore, String partenza, String arrivo, LocalDateTime dataOraPartenza, int postiDisponibili, double contributoCondiviso) {
+    // Costruttore Aggiornato
+    public ViaggioBean(int idViaggio, String emailGuidatore, String partenza, String arrivo,
+                       LocalDateTime dataOraPartenza, int postiDisponibili, double contributoCondiviso, String targaVeicolo) {
         this.idViaggio = idViaggio;
         this.emailGuidatore = emailGuidatore;
         this.partenza = partenza;
@@ -19,6 +23,7 @@ public class ViaggioBean {
         this.dataOraPartenza = dataOraPartenza;
         this.postiDisponibili = postiDisponibili;
         this.contributoCondiviso = contributoCondiviso;
+        this.targaVeicolo = targaVeicolo;
     }
 
     public ViaggioBean() {}
@@ -44,4 +49,7 @@ public class ViaggioBean {
 
     public double getContributoCondiviso() { return contributoCondiviso; }
     public void setContributoCondiviso(double contributoCondiviso) { this.contributoCondiviso = contributoCondiviso; }
+
+    public String getTargaVeicolo() { return targaVeicolo; }
+    public void setTargaVeicolo(String targaVeicolo) { this.targaVeicolo = targaVeicolo; }
 }
