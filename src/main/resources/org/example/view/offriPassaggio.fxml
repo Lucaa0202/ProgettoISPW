@@ -31,9 +31,10 @@
             <center>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <children>
-                        <TextField fx:id="partenza" layoutX="100.0" layoutY="50.0" prefHeight="40.0" prefWidth="240.0" promptText="Da dove parti?" style="-fx-background-color: #f7f7f7; -fx-background-radius: 22px;">
+
+                        <ComboBox fx:id="partenza" layoutX="100.0" layoutY="50.0" prefHeight="40.0" prefWidth="240.0" promptText="Da dove parti?" style="-fx-background-color: #f7f7f7; -fx-background-radius: 22px;">
                             <effect><InnerShadow height="15.0" radius="7.0" width="15.0"><color><Color opacity="0.25" /></color></InnerShadow></effect>
-                        </TextField>
+                        </ComboBox>
                         <Text layoutX="115.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Città di Partenza" />
 
                         <DatePicker fx:id="dataPartenza" layoutX="100.0" layoutY="140.0" prefHeight="40.0" prefWidth="240.0" promptText="Seleziona la data" style="-fx-background-color: #f7f7f7; -fx-background-radius: 22px;" />
@@ -44,9 +45,9 @@
                         </TextField>
                         <Text layoutX="115.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Posti Disponibili" />
 
-                        <TextField fx:id="arrivo" layoutX="420.0" layoutY="50.0" prefHeight="40.0" prefWidth="240.0" promptText="Dove sei diretto?" style="-fx-background-color: #f7f7f7; -fx-background-radius: 22px;">
+                        <ComboBox fx:id="arrivo" layoutX="420.0" layoutY="50.0" prefHeight="40.0" prefWidth="240.0" promptText="Dove sei diretto?" style="-fx-background-color: #f7f7f7; -fx-background-radius: 22px;">
                             <effect><InnerShadow height="15.0" radius="7.0" width="15.0"><color><Color opacity="0.25" /></color></InnerShadow></effect>
-                        </TextField>
+                        </ComboBox>
                         <Text layoutX="435.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Città di Destinazione" />
 
                         <TextField fx:id="oraPartenza" layoutX="420.0" layoutY="140.0" prefHeight="40.0" prefWidth="240.0" promptText="Es: 14:30" style="-fx-background-color: #f7f7f7; -fx-background-radius: 22px;">
