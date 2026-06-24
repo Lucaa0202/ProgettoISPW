@@ -14,7 +14,7 @@ public class PrenotazioneMapper implements BeanAndModelMapper<PrenotazioneBean, 
                 bean.getEmailPasseggero(),
                 bean.getIdViaggio(),
                 bean.getStato(),
-                LocalDateTime.now() // Impostiamo la data di prenotazione al momento attuale
+                bean.getDataPrenotazione() // <-- CORREZIONE: Usiamo la data che arriva dalla grafica!
         );
 
         // Visto che l'ID della prenotazione non è nel costruttore del Model, lo impostiamo col setter
@@ -25,13 +25,14 @@ public class PrenotazioneMapper implements BeanAndModelMapper<PrenotazioneBean, 
 
     @Override
     public PrenotazioneBean fromModelToBean(Prenotazione model) {
-        // Qui l'ordine del Bean (che avevamo scritto prima) era:
-        // (int idPrenotazione, int idViaggio, String email, StatoPrenotazione)
+        // Qui l'ordine del Bean (aggiornato) è:
+        // (int idPrenotazione, int idViaggio, String email, StatoPrenotazione, LocalDateTime dataPrenotazione)
         return new PrenotazioneBean(
                 model.getIdPrenotazione(),
                 model.getIdViaggio(),
                 model.getEmailPasseggero(),
-                model.getStato()
+                model.getStato(),
+                model.getDataPrenotazione() // <-- CORREZIONE: Aggiunto il quinto parametro!
         );
     }
 }

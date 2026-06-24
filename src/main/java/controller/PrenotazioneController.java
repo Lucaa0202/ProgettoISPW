@@ -3,10 +3,14 @@ package controller;
 import beans.PrenotazioneBean;
 import dao.PrenotazioneDAO;
 import exceptions.DbOperationException;
+import exceptions.NoResultException;
 import model.Prenotazione;
 import patterns.factory.BeanAndModelMapperFactory;
 import patterns.factory.FactoryDAO;
 import patterns.observer.PrenotazioneManagerConcreteSubject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PrenotazioneController {
 
@@ -52,6 +56,25 @@ public class PrenotazioneController {
         } catch (Exception e) {
             throw new DbOperationException("Errore durante l'eliminazione della prenotazione: " + e.getMessage());
         }
+    }
+
+    // =================================================================================
+    // 3. NUOVO METODO: IL GUIDATORE VISUALIZZA LE RICHIESTE IN SOSPESO (Stile BodyBuilding)
+    // =================================================================================
+    public List<PrenotazioneBean> caricaRichiestePerViaggio(int idViaggio) throws NoResultException {
+        // 1. Peschiamo dal Database usando il tuo DAO
+        List<Prenotazione> listaDalDB = prenotazioneDAO.trovaPrenotazioniPerViaggio(idViaggio);
+
+        // 2. [IL SEGRETO DELL'OBSERVER] Carichiamo la memoria del Subject!
+        PrenotazioneManagerConcreteSubject.getInstance().loadPrenotazioni(listaDalDB);
+
+        // 3. Trasformiamo i Model in Bean per passarli alla Grafica (usando il tuo Mapper)
+        List<PrenotazioneBean> listaBean = new ArrayList<>();
+        for (Prenotazione p : listaDalDB) {
+            listaBean.add(factory.fromModelToBean(p, Prenotazione.class));
+        }
+
+        return listaBean;
     }
 
     // Metodo utility del tuo amico per creare un Bean (createReservationBean)
