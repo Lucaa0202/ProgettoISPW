@@ -11,16 +11,19 @@ public class ViaggioQuery {
     private ViaggioQuery() {}
 
     public static void insertViaggio(Connection conn, Viaggio viaggio) throws SQLException, DbOperationException {
-        String query = "INSERT INTO Viaggio (partenza, destinazione, data_ora, posti_disponibili, prezzo, stato, guidatore_email) VALUES (?,?,?,?,?,?,?)";
+        // Nomi colonne allineati perfettamente al tuo DB
+        String query  = "INSERT INTO Viaggio (guidatore_email, partenza, destinazione, data_ora, posti_disponibili, prezzo, veicolo_targa, stato) VALUES (?,?,?,?,?,?,?,?)";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setString(1, viaggio.getPartenza());
-            pstmt.setString(2, viaggio.getDestinazione());
-            // Convertiamo LocalDateTime in Timestamp per MySQL
-            pstmt.setTimestamp(3, Timestamp.valueOf(viaggio.getDataOra()));
-            pstmt.setInt(4, viaggio.getPostiDisponibili());
-            pstmt.setDouble(5, viaggio.getPrezzo());
-            pstmt.setInt(6, viaggio.getStato().getId());
-            pstmt.setString(7, viaggio.getEmailGuidatore());
+
+            // ORDINE CORRETTO DEI PARAMETRI (Speculare ai punti interrogativi qui sopra)
+            pstmt.setString(1, viaggio.getEmail()); // Se hai chiamato il getter in modo diverso (es. getEmailGuidatore), cambialo qui
+            pstmt.setString(2, viaggio.getPartenza());
+            pstmt.setString(3, viaggio.getDestinazione());
+            pstmt.setTimestamp(4, Timestamp.valueOf(viaggio.getDataOra()));
+            pstmt.setInt(5, viaggio.getPostiDisponibili());
+            pstmt.setDouble(6, viaggio.getPrezzo());
+            pstmt.setString(7, viaggio.getTarga()); // Se hai chiamato il getter in modo diverso, cambialo qui
+            pstmt.setInt(8, 1); // 1 = ATTIVO (visto che lo usi in searchViaggi)
 
             int rs = pstmt.executeUpdate();
             if (rs == 0) {
@@ -31,7 +34,7 @@ public class ViaggioQuery {
 
     public static ResultSet searchViaggi(Connection conn, String partenza, String destinazione) throws SQLException {
         // Cerchiamo i viaggi per tratta che sono "ATTIVI" (stato = 1) e hanno posti disponibili
-        String query = "SELECT id, partenza, destinazione, data_ora, posti_disponibili, prezzo, stato, guidatore_email FROM Viaggio WHERE partenza = ? AND destinazione = ? AND stato = 1 AND posti_disponibili > 0";
+        String query = "SELECT idViaggio, partenza, destinazione, data_ora, posti_disponibili, prezzo, stato, guidatore_email, veicolo_targa FROM Viaggio WHERE partenza = ? AND destinazione = ? AND stato = 1 AND posti_disponibili > 0";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, partenza);
         pstmt.setString(2, destinazione);
@@ -39,14 +42,14 @@ public class ViaggioQuery {
     }
 
     public static ResultSet retrieveViaggio(Connection conn, int idViaggio) throws SQLException {
-        String query = "SELECT id, partenza, destinazione, data_ora, posti_disponibili, prezzo, stato, guidatore_email FROM Viaggio WHERE id = ?";
+        String query = "SELECT idViaggio, partenza, destinazione, data_ora, posti_disponibili, prezzo, stato, guidatore_email, veicolo_targa FROM Viaggio WHERE idViaggio = ?";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setInt(1, idViaggio);
         return pstmt.executeQuery();
     }
 
     public static void updatePosti(Connection conn, int idViaggio, int nuoviPosti) throws SQLException, DbOperationException {
-        String query = "UPDATE Viaggio SET posti_disponibili = ? WHERE id = ?";
+        String query = "UPDATE Viaggio SET posti_disponibili = ? WHERE idViaggio = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setInt(1, nuoviPosti);
             pstmt.setInt(2, idViaggio);
