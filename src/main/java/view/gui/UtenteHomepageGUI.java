@@ -15,11 +15,6 @@ public class UtenteHomepageGUI extends CommonGUI {
     // --- I METODI PER I BOTTONI DEL CARPOOLING ---
 
     @FXML
-    protected void vaiAggiungiVeicolo(MouseEvent event) {
-        cambiaSchermata(event, "/org/example/view/aggiungiVeicolo.fxml", new AggiungiVeicoloGUI(session));
-    }
-
-    @FXML
     protected void cercaPassaggio(MouseEvent event) {
         System.out.println("Vado alla pagina: Cerca Passaggio...");
         // Qui poi aggiungeremo il cambio scena

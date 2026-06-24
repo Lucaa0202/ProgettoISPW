@@ -12,6 +12,7 @@ public class Viaggio {
     private double prezzo;
     private StatoViaggio stato;
     private String emailGuidatore;
+    // --- NUOVO ATTRIBUTO ---
     private String targaVeicolo;
 
     // Costruttore COMPLETO (usato quando leggiamo dal Database)
@@ -28,7 +29,7 @@ public class Viaggio {
         this.targaVeicolo = targaVeicolo;
     }
 
-    // Costruttore SENZA ID (usato quando creiamo un viaggio nuovo)
+    // Costruttore SENZA ID (usato quando creiamo un viaggio nuovo, l'ID lo mette MySQL)
     public Viaggio(String partenza, String destinazione, LocalDateTime dataOra,
                    int postiDisponibili, double prezzo, StatoViaggio stato, String emailGuidatore, String targaVeicolo) {
         this.partenza = partenza;
@@ -68,13 +69,4 @@ public class Viaggio {
 
     public String getTargaVeicolo() { return targaVeicolo; }
     public void setTargaVeicolo(String targaVeicolo) { this.targaVeicolo = targaVeicolo; }
-
-    // --- METODI AGGIUNTIVI PER COMPATIBILITÀ CON ViaggioQuery ---
-    public String getEmail() {
-        return this.emailGuidatore;
-    }
-
-    public String getTarga() {
-        return this.targaVeicolo;
-    }
 }
