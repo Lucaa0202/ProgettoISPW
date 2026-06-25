@@ -61,9 +61,16 @@ public class RisultatiRicercaGUI extends CommonGUI {
         }
 
         try {
+            // --- INIZIO MODIFICA: Recuperiamo l'email dalla sessione ---
+            // (Uso i percorsi completi per evitare problemi di import, ma se li hai già importati puoi toglierli)
+            beans.UtenteBean utenteLoggato = (beans.UtenteBean) session.getUser();
+            String miaEmail = utenteLoggato.getCredenziali().getEmail();
+            // --- FINE MODIFICA ---
+
             List<ViaggioBean> risultati = new ArrayList<>();
-            // Chiamiamo il tuo controller di logica!
-            ricercaController.cercaViaggi(risultati, partenza, arrivo);
+
+            // Passiamo la nostra email come quarto parametro!
+            ricercaController.cercaViaggi(risultati, partenza, arrivo, miaEmail);
 
             // Se va tutto a buon fine, stampiamo la lista
             mostraViaggi(risultati);

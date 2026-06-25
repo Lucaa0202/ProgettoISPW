@@ -32,12 +32,16 @@ public class ViaggioQuery {
         }
     }
 
-    public static ResultSet searchViaggi(Connection conn, String partenza, String destinazione) throws SQLException {
-        // Cerchiamo i viaggi per tratta che sono "ATTIVI" (stato = 1) e hanno posti disponibili
-        String query = "SELECT idViaggio, partenza, destinazione, data_ora, posti_disponibili, prezzo, stato, guidatore_email, veicolo_targa FROM Viaggio WHERE partenza = ? AND destinazione = ? AND stato = 1 AND posti_disponibili > 0";
+    public static ResultSet searchViaggi(Connection conn, String partenza, String destinazione, String emailPasseggero) throws SQLException {
+        // Aggiungiamo: guidatore_email != ?
+        String query = "SELECT idViaggio, partenza, destinazione, data_ora, posti_disponibili, prezzo, stato, guidatore_email, veicolo_targa " +
+                "FROM Viaggio " +
+                "WHERE partenza = ? AND destinazione = ? AND stato = 1 AND posti_disponibili > 0 AND guidatore_email != ?";
+
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, partenza);
         pstmt.setString(2, destinazione);
+        pstmt.setString(3, emailPasseggero); // Il parametro anti-clonazione!
         return pstmt.executeQuery();
     }
 
@@ -60,4 +64,10 @@ public class ViaggioQuery {
             }
         }
     }
-}
+    public static ResultSet searchViaggiPerGuidatore(Connection conn, String emailGuidatore) throws SQLException {
+        String query = "SELECT idViaggio, partenza, destinazione, data_ora, posti_disponibili, prezzo, stato, guidatore_email, veicolo_targa FROM Viaggio WHERE guidatore_email = ?";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, emailGuidatore);
+        return pstmt.executeQuery();
+        }
+    }

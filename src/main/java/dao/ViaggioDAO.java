@@ -10,13 +10,16 @@ public interface ViaggioDAO {
     void inserisciViaggio(Viaggio viaggio) throws DbOperationException;
 
     // Cerca viaggi in base a partenza e destinazione (SonarCloud friendly: restituisce la lista!)
-    List<Viaggio> cercaViaggi(String partenza, String destinazione) throws NoResultException;
+    // Cerca viaggi in base a partenza, destinazione ed escludendo i propri viaggi
+    List<Viaggio> cercaViaggi(String partenza, String destinazione, String emailPasseggero) throws NoResultException;
 
     // Recupera un singolo viaggio tramite ID
     Viaggio recuperaViaggio(int idViaggio) throws NoResultException;
 
     // Aggiorna i posti disponibili dopo una prenotazione
     void aggiornaPostiDisponibili(int idViaggio, int nuoviPosti) throws DbOperationException;
+
+    List<Viaggio> recuperaViaggiPerGuidatore(String emailGuidatore) throws NoResultException;
 
     // Metodo default per eliminare o annullare un viaggio
     default void annullaViaggio(Viaggio viaggio) {

@@ -20,12 +20,12 @@ public class RicercaViaggiController {
     }
 
     // Basato sul searchSchedules del tuo amico, ma ottimizzato per il tuo DAO
-    public void cercaViaggi(List<ViaggioBean> viaggiTrovatiBean, String partenza, String destinazione) throws NoResultException {
+    public void cercaViaggi(List<ViaggioBean> viaggiTrovatiBean, String partenza, String destinazione, String emailPasseggero) throws NoResultException {
         viaggiTrovatiBean.clear();
 
         try {
             // CORRETTO: Ora passiamo solo 2 argomenti e salviamo il risultato nella lista!
-            List<Viaggio> viaggiModel = viaggioDAO.cercaViaggi(partenza, destinazione);
+            List<Viaggio> viaggiModel = viaggioDAO.cercaViaggi(partenza, destinazione,emailPasseggero);
 
             if (viaggiModel.isEmpty()) {
                 throw new NoResultException("Nessun viaggio trovato per questa tratta.");

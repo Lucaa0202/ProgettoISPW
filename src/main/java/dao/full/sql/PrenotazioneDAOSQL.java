@@ -15,9 +15,10 @@ import java.util.List;
 
 public class PrenotazioneDAOSQL implements PrenotazioneDAO {
 
-    private static final String ID = "id";
-    private static final String EMAIL_PASSEGGERO = "email_passeggero";
-    private static final String ID_VIAGGIO = "id_viaggio";
+    // COSTANTI AGGIORNATE PER COMBACIARE CON IL DB
+    private static final String ID = "idPrenotazione";
+    private static final String EMAIL_PASSEGGERO = "passeggero_email";
+    private static final String ID_VIAGGIO = "viaggio_id";
     private static final String STATO = "stato";
     private static final String DATA_PRENOTAZIONE = "data_prenotazione";
 
@@ -30,7 +31,6 @@ public class PrenotazioneDAOSQL implements PrenotazioneDAO {
         }
     }
 
-    // RINOMINATO: da recuperaPrenotazioniPasseggero a trovaPrenotazioniPasseggero
     @Override
     public List<Prenotazione> trovaPrenotazioniPasseggero(String emailPasseggero) throws NoResultException {
         List<Prenotazione> prenotazioni = new ArrayList<>();
@@ -53,7 +53,6 @@ public class PrenotazioneDAOSQL implements PrenotazioneDAO {
         return prenotazioni;
     }
 
-    // RINOMINATO: da recuperaPrenotazioniViaggio a trovaPrenotazioniViaggio
     @Override
     public List<Prenotazione> trovaPrenotazioniPerViaggio(int idViaggio) throws NoResultException {
         List<Prenotazione> prenotazioni = new ArrayList<>();
@@ -79,7 +78,6 @@ public class PrenotazioneDAOSQL implements PrenotazioneDAO {
     @Override
     public void aggiornaStatoPrenotazione(Prenotazione prenotazione) throws DbOperationException {
         try (Connection conn = ConnectionSQL.getConnection()) {
-            // Estraiamo l'ID della prenotazione e l'ID del nuovo stato direttamente dall'oggetto!
             PrenotazioneQuery.updateStatoPrenotazione(conn, prenotazione.getIdPrenotazione(), prenotazione.getStato().getId());
         } catch (SQLException e) {
             throw new DbOperationException("Errore di connessione durante l'aggiornamento dello stato", e);

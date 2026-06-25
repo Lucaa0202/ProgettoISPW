@@ -9,6 +9,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import utilities.other.mappers.Session;
 
+import java.util.List;
+
 public class IMieiViaggiGUI extends CommonGUI {
 
     public IMieiViaggiGUI(Session session) {
@@ -70,7 +72,7 @@ public class IMieiViaggiGUI extends CommonGUI {
 
                     // Vai alla pagina delle richieste per QUESTO viaggio (la faremo al prossimo step)
                     System.out.println("Apro le richieste per il viaggio verso " + viaggioSelezionato.getArrivo());
-                    // cambiaSchermata(event, "/org/example/view/gestioneRichieste.fxml", new GestioneRichiesteGUI(session, viaggioSelezionato));
+                    cambiaSchermata(event, "/org/example/view/gestioneRichieste.fxml", new GestioneRichiesteGUI(session, viaggioSelezionato));
                 });
                 return btn;
             }
@@ -91,9 +93,23 @@ public class IMieiViaggiGUI extends CommonGUI {
         UtenteBean utenteLoggato = (UtenteBean) session.getUser();
         String miaEmail = utenteLoggato.getCredenziali().getEmail();
 
-        // QUI ANDRANNO LE CHIAMATE AI CONTROLLER (DA IMPLEMENTARE IN FUTURO)
-        // List<ViaggioBean> mieiViaggi = viaggioController.getViaggiDi(miaEmail);
-        // List<PrenotazioneBean> miePrenotazioni = prenotazioneController.getPrenotazioniDi(miaEmail);
+        try {
+            // Chiamiamo il tuo Controller
+            controller.GestioneViaggioController viaggioController = new controller.GestioneViaggioController();
+            List<ViaggioBean> mieiViaggi = new java.util.ArrayList<>();
+
+            // Riempiamo la lista
+            viaggioController.recuperaViaggiGuidatore(miaEmail, mieiViaggi);
+
+            // Iniettiamo la lista piena nella tabella JavaFX!
+            javafx.collections.ObservableList<ViaggioBean> offertiList = javafx.collections.FXCollections.observableList(mieiViaggi);
+            tableOfferti.setItems(offertiList);
+
+        } catch (Exception e) {
+            System.err.println("Nessun viaggio offerto trovato o errore: " + e.getMessage());
+        }
+
+        // (Più avanti faremo lo stesso per tablePrenotati con il PrenotazioneController)
     }
 
     @FXML

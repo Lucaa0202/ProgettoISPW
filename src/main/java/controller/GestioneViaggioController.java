@@ -49,4 +49,13 @@ public class GestioneViaggioController {
             veicoliBeanList.add(mapper.fromModelToBean(veicolo));
         }
     }
+    public void recuperaViaggiGuidatore(String email, List<ViaggioBean> viaggiBeanList) throws Exception {
+        // Peschiamo i viaggi dal DB
+        List<Viaggio> viaggiModel = viaggioDAO.recuperaViaggiPerGuidatore(email);
+
+        ViaggioMapper mapper = new ViaggioMapper();
+        for (Viaggio viaggio : viaggiModel) {
+            viaggiBeanList.add(mapper.fromModelToBean(viaggio));
+        }
+    }
 }

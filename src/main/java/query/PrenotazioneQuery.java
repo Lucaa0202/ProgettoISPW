@@ -14,7 +14,7 @@ public class PrenotazioneQuery {
         // QUERY 1: Nomi delle colonne CORRETTI (passeggero_email e viaggio_id)
         String insertQuery = "INSERT INTO prenotazione (passeggero_email, viaggio_id, stato, data_prenotazione) VALUES (?,?,?,?)";
 
-        // QUERY 2: Scala il posto (NOTA: assicurati che l'ID nella tabella Viaggio si chiami "idViaggio". Se si chiama solo "id", cambia "WHERE idViaggio = ?" in "WHERE id = ?")
+        // QUERY 2: Scala il posto
         String updatePostiQuery = "UPDATE Viaggio SET posti_disponibili = posti_disponibili - 1 WHERE idViaggio = ?";
 
         try (PreparedStatement psInsert = conn.prepareStatement(insertQuery);
@@ -37,24 +37,24 @@ public class PrenotazioneQuery {
         }
     }
 
-    // --- DA QUI IN GIÙ TUTTI I TUOI METODI VECCHI INTATTI ---
+    // --- METODI AGGIORNATI CON I NOMI COLONNE CORRETTI ---
 
     public static ResultSet retrievePrenotazioniByPasseggero(Connection conn, String emailPasseggero) throws SQLException {
-        String query = "SELECT id, email_passeggero, id_viaggio, stato, data_prenotazione FROM Prenotazione WHERE email_passeggero = ?";
+        String query = "SELECT idPrenotazione, passeggero_email, viaggio_id, stato, data_prenotazione FROM Prenotazione WHERE passeggero_email = ?";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, emailPasseggero);
         return pstmt.executeQuery();
     }
 
     public static ResultSet retrievePrenotazioniByViaggio(Connection conn, int idViaggio) throws SQLException {
-        String query = "SELECT id, email_passeggero, id_viaggio, stato, data_prenotazione FROM Prenotazione WHERE id_viaggio = ?";
+        String query = "SELECT idPrenotazione, passeggero_email, viaggio_id, stato, data_prenotazione FROM Prenotazione WHERE viaggio_id = ?";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setInt(1, idViaggio);
         return pstmt.executeQuery();
     }
 
     public static void updateStatoPrenotazione(Connection conn, int idPrenotazione, int idStato) throws SQLException, DbOperationException {
-        String query = "UPDATE Prenotazione SET stato = ? WHERE id = ?";
+        String query = "UPDATE Prenotazione SET stato = ? WHERE idPrenotazione = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setInt(1, idStato);
             pstmt.setInt(2, idPrenotazione);
@@ -67,7 +67,7 @@ public class PrenotazioneQuery {
     }
 
     public static void deletePrenotazione(Connection conn, int idPrenotazione) throws SQLException, DbOperationException {
-        String query = "DELETE FROM Prenotazione WHERE id = ?";
+        String query = "DELETE FROM Prenotazione WHERE idPrenotazione = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setInt(1, idPrenotazione);
 

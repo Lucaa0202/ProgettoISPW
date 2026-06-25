@@ -38,11 +38,12 @@ public class ViaggioDAOSQL implements ViaggioDAO {
     }
 
     @Override
-    public List<Viaggio> cercaViaggi(String partenza, String destinazione) throws NoResultException {
+    public List<Viaggio> cercaViaggi(String partenza, String destinazione, String emailPasseggero) throws NoResultException {
         List<Viaggio> viaggiTrovati = new ArrayList<>();
 
         try (Connection conn = ConnectionSQL.getConnection();
-             ResultSet rs = ViaggioQuery.searchViaggi(conn, partenza, destinazione)) {
+             // Ora passiamo anche l'email alla query!
+             ResultSet rs = ViaggioQuery.searchViaggi(conn, partenza, destinazione, emailPasseggero)) {
 
             while (rs.next()) {
                 viaggiTrovati.add(mappaResultSetAViaggio(rs));
@@ -73,6 +74,24 @@ public class ViaggioDAOSQL implements ViaggioDAO {
             handleException(e);
             return null;
         }
+    }
+
+    @Override
+    public List<Viaggio> recuperaViaggiPerGuidatore(String emailGuidatore) throws NoResultException {
+        List<Viaggio> viaggiTrovati = new ArrayList<>();
+
+        try (Connection conn = ConnectionSQL.getConnection();
+             ResultSet rs = ViaggioQuery.searchViaggiPerGuidatore(conn, emailGuidatore)) {
+
+            while (rs.next()) {
+                viaggiTrovati.add(mappaResultSetAViaggio(rs));
+            }
+
+        } catch (SQLException e) {
+            handleException(e);
+        }
+
+        return viaggiTrovati;
     }
 
     @Override
