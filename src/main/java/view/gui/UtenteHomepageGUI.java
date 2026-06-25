@@ -71,7 +71,8 @@ public class UtenteHomepageGUI extends CommonGUI implements Observer {
 
     @FXML
     protected void iMieiViaggi(MouseEvent event) {
-        System.out.println("Vado alla pagina: Storico Viaggi...");
+        // Ora colleghiamo il bottone al nuovo file FXML e alla nuova classe GUI!
+        cambiaSchermata(event, "/org/example/view/iMieiViaggi.fxml", new IMieiViaggiGUI(session));
     }
 
     @FXML

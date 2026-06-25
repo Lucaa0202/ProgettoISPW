@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<!-- fx:controller deve puntare esattamente alla tua classe Java -->
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.IMieiViaggiGUI">
+    <children>
+        <!-- Titolo della pagina -->
+        <Label layoutX="30.0" layoutY="20.0" text="I Miei Viaggi" textFill="#333333">
+            <font>
+                <Font name="System Bold" size="28.0" />
+            </font>
+        </Label>
+
+        <!-- Bottone Indietro -->
+        <Button layoutX="30.0" layoutY="540.0" mnemonicParsing="false" onMouseClicked="#tornaIndietro" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #cccccc; -fx-text-fill: black; -fx-cursor: hand;" text="Torna Indietro">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Button>
+
+        <!-- Il TabPane (Le schede per separare Guidatore e Passeggero) -->
+        <TabPane layoutX="30.0" layoutY="70.0" prefHeight="450.0" prefWidth="740.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <!-- PRIMA SCHEDA: VIAGGI OFFERTI (GUIDATORE) -->
+                <Tab text="Viaggi che offro (Guidatore)">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="tableOfferti" prefHeight="420.0" prefWidth="740.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn fx:id="partenzaOffCol" prefWidth="180.0" text="Partenza" />
+                                        <TableColumn fx:id="arrivoOffCol" prefWidth="180.0" text="Arrivo" />
+                                        <TableColumn fx:id="dataOffCol" prefWidth="180.0" text="Data e Ora" />
+                                        <TableColumn fx:id="vediRichiesteBtnCol" prefWidth="198.0" text="Gestione" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <!-- SECONDA SCHEDA: VIAGGI PRENOTATI (PASSEGGERO) -->
+                <Tab text="I miei passaggi (Passeggero)">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="tablePrenotati" prefHeight="420.0" prefWidth="740.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn fx:id="idViaggioPrenCol" prefWidth="370.0" text="ID Viaggio" />
+                                        <TableColumn fx:id="statoPrenCol" prefWidth="368.0" text="Stato Prenotazione" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>
