@@ -9,6 +9,8 @@ public interface PrenotazioneDAO {
 
     void eliminaPrenotazione(int idPrenotazione) throws DbOperationException;
 
+    void rifiutaAltreRichieste(int idViaggio) throws exceptions.DbOperationException;
+
     // Crea una nuova richiesta di prenotazione
     void inserisciPrenotazione(Prenotazione prenotazione) throws DbOperationException;
 

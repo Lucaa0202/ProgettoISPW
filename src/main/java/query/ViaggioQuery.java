@@ -33,15 +33,18 @@ public class ViaggioQuery {
     }
 
     public static ResultSet searchViaggi(Connection conn, String partenza, String destinazione, String emailPasseggero) throws SQLException {
-        // Aggiungiamo: guidatore_email != ?
+        // Aggiungiamo il controllo NOT IN sulle prenotazioni dell'utente
         String query = "SELECT idViaggio, partenza, destinazione, data_ora, posti_disponibili, prezzo, stato, guidatore_email, veicolo_targa " +
                 "FROM Viaggio " +
-                "WHERE partenza = ? AND destinazione = ? AND stato = 1 AND posti_disponibili > 0 AND guidatore_email != ?";
+                "WHERE partenza = ? AND destinazione = ? AND stato = 1 AND posti_disponibili > 0 " +
+                "AND guidatore_email != ? " +
+                "AND idViaggio NOT IN (SELECT viaggio_id FROM Prenotazione WHERE passeggero_email = ?)";
 
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, partenza);
         pstmt.setString(2, destinazione);
-        pstmt.setString(3, emailPasseggero); // Il parametro anti-clonazione!
+        pstmt.setString(3, emailPasseggero); // Esclude i viaggi dove sono il guidatore
+        pstmt.setString(4, emailPasseggero); // Esclude i viaggi dove sono già prenotato
         return pstmt.executeQuery();
     }
 

@@ -10,30 +10,22 @@ public class PrenotazioneQuery {
     // Costruttore privato per Utility Class (SonarCloud lo adora)
     private PrenotazioneQuery() {}
 
-    public static void insertPrenotazione(Connection conn, Prenotazione prenotazione) throws SQLException, DbOperationException {
-        // QUERY 1: Nomi delle colonne CORRETTI (passeggero_email e viaggio_id)
+    public static void insertPrenotazione(Connection conn, model.Prenotazione prenotazione) throws SQLException, exceptions.DbOperationException {
+        // Facciamo solo l'inserimento! Niente UPDATE dei posti qui.
         String insertQuery = "INSERT INTO prenotazione (passeggero_email, viaggio_id, stato, data_prenotazione) VALUES (?,?,?,?)";
 
-        // QUERY 2: Scala il posto
-        String updatePostiQuery = "UPDATE Viaggio SET posti_disponibili = posti_disponibili - 1 WHERE idViaggio = ?";
-
-        try (PreparedStatement psInsert = conn.prepareStatement(insertQuery);
-             PreparedStatement psUpdate = conn.prepareStatement(updatePostiQuery)) {
-
-            // Esegue l'inserimento
+        try (PreparedStatement psInsert = conn.prepareStatement(insertQuery)) {
             psInsert.setString(1, prenotazione.getEmailPasseggero());
             psInsert.setInt(2, prenotazione.getIdViaggio());
-            psInsert.setInt(3, prenotazione.getStato().getId());
+
+            // Forza l'inserimento allo stato IN_ATTESA (che nel tuo Enum ha ID 1)
+            psInsert.setInt(3, utilities.enums.StatoPrenotazione.IN_ATTESA.getId());
             psInsert.setTimestamp(4, Timestamp.valueOf(prenotazione.getDataPrenotazione()));
 
             int rs = psInsert.executeUpdate();
             if (rs == 0) {
-                throw new DbOperationException("Errore imprevisto: La prenotazione non è stata salvata.");
+                throw new exceptions.DbOperationException("Errore imprevisto: La prenotazione non è stata salvata.");
             }
-
-            // Esegue lo scalo del posto
-            psUpdate.setInt(1, prenotazione.getIdViaggio());
-            psUpdate.executeUpdate();
         }
     }
 

@@ -20,20 +20,28 @@ public class IMieiViaggiGUI extends CommonGUI {
     // ==========================================================
     // TABELLA 1: I VIAGGI CHE OFFRO (GUIDATORE)
     // ==========================================================
-    @FXML private TableView<ViaggioBean> tableOfferti;
-    @FXML private TableColumn<ViaggioBean, String> partenzaOffCol;
-    @FXML private TableColumn<ViaggioBean, String> arrivoOffCol;
-    @FXML private TableColumn<ViaggioBean, String> dataOffCol;
-    @FXML private TableColumn<ViaggioBean, Void> vediRichiesteBtnCol;
+    @FXML
+    private TableView<ViaggioBean> tableOfferti;
+    @FXML
+    private TableColumn<ViaggioBean, String> partenzaOffCol;
+    @FXML
+    private TableColumn<ViaggioBean, String> arrivoOffCol;
+    @FXML
+    private TableColumn<ViaggioBean, String> dataOffCol;
+    @FXML
+    private TableColumn<ViaggioBean, Void> vediRichiesteBtnCol;
 
     // ==========================================================
     // TABELLA 2: I VIAGGI CHE HO PRENOTATO (PASSEGGERO)
     // ==========================================================
-    @FXML private TableView<PrenotazioneBean> tablePrenotati;
+    @FXML
+    private TableView<PrenotazioneBean> tablePrenotati;
     // Le colonne dipendono da come è fatto il tuo PrenotazioneBean,
     // qui mettiamo le base: ID Viaggio e Stato
-    @FXML private TableColumn<PrenotazioneBean, String> idViaggioPrenCol;
-    @FXML private TableColumn<PrenotazioneBean, String> statoPrenCol;
+    @FXML
+    private TableColumn<PrenotazioneBean, String> idViaggioPrenCol;
+    @FXML
+    private TableColumn<PrenotazioneBean, String> statoPrenCol;
 
     @FXML
     public void initialize() {
@@ -109,8 +117,21 @@ public class IMieiViaggiGUI extends CommonGUI {
             System.err.println("Nessun viaggio offerto trovato o errore: " + e.getMessage());
         }
 
-        // (Più avanti faremo lo stesso per tablePrenotati con il PrenotazioneController)
+        try {
+            controller.PrenotazioneController prenotazioneController = new controller.PrenotazioneController();
+            List<PrenotazioneBean> miePrenotazioni = new java.util.ArrayList<>();
+
+            // Richiamiamo il nuovo metodo appena creato
+            prenotazioneController.recuperaPrenotazioniPasseggero(miaEmail, miePrenotazioni);
+
+            javafx.collections.ObservableList<PrenotazioneBean> prenotatiList = javafx.collections.FXCollections.observableList(miePrenotazioni);
+            tablePrenotati.setItems(prenotatiList);
+
+        } catch (Exception e) {
+            System.err.println("Nessuna prenotazione passeggero trovata o errore: " + e.getMessage());
+        }
     }
+
 
     @FXML
     protected void tornaIndietro(MouseEvent event) {

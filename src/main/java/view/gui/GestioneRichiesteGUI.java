@@ -24,7 +24,7 @@ public class GestioneRichiesteGUI extends CommonGUI implements Observer {
     @FXML private TableColumn<PrenotazioneBean, Void> accettaCol;
     @FXML private TableColumn<PrenotazioneBean, Void> rifiutaCol;
 
-    // Il costruttore ora accetta anche il Viaggio cliccato!
+    // Il costruttore accetta anche il Viaggio cliccato!
     public GestioneRichiesteGUI(Session session, ViaggioBean viaggioSelezionato) {
         super(session);
         this.viaggioSelezionato = viaggioSelezionato;
@@ -48,7 +48,7 @@ public class GestioneRichiesteGUI extends CommonGUI implements Observer {
 
     private void caricaRichieste() {
         try {
-            // Usa il metodo che avevamo preparato nel PrenotazioneController!
+            // Usa il metodo preparato nel PrenotazioneController!
             List<PrenotazioneBean> richieste = prenotazioneController.caricaRichiestePerViaggio(viaggioSelezionato.getIdViaggio());
 
             javafx.collections.ObservableList<PrenotazioneBean> lista = javafx.collections.FXCollections.observableList(richieste);
@@ -58,22 +58,19 @@ public class GestioneRichiesteGUI extends CommonGUI implements Observer {
         }
     }
 
-    // --- IL METODO MAGICO DEL TUO AMICO ---
+    // --- IL METODO MAGICO AGGIORNATO ---
     private TableCell<PrenotazioneBean, Void> createButtonCell(String buttonText, boolean isAccept) {
         return new TableCell<>() {
             private final Button button = createButton(buttonText, isAccept);
 
             private Button createButton(String buttonText, boolean isAccept) {
                 Button btn = new Button(buttonText);
-                if(isAccept) {
-                    btn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-cursor: hand;");
-                } else {
-                    btn.setStyle("-fx-background-color: #F44336; -fx-text-fill: white; -fx-cursor: hand;");
-                }
+                btn.setStyle(isAccept ? "-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-cursor: hand;"
+                        : "-fx-background-color: #F44336; -fx-text-fill: white; -fx-cursor: hand;");
 
                 btn.setOnMouseClicked(event -> {
-                    PrenotazioneBean prenotationeSelezionata = getTableView().getItems().get(getIndex());
-                    gestisciPrenotazione(prenotationeSelezionata, isAccept);
+                    PrenotazioneBean prenotazioneSelezionata = getTableView().getItems().get(getIndex());
+                    gestisciPrenotazione(prenotazioneSelezionata, isAccept);
                 });
                 return btn;
             }
@@ -81,24 +78,60 @@ public class GestioneRichiesteGUI extends CommonGUI implements Observer {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
+                if (empty || getTableView() == null || getTableView().getItems().size() <= getIndex()) {
                     setGraphic(null);
                 } else {
-                    setGraphic(button);
+                    PrenotazioneBean prenotazione = getTableView().getItems().get(getIndex());
+                    // Mostriamo il bottone SOLO se la prenotazione è IN_ATTESA
+                    if (prenotazione.getStato() == utilities.enums.StatoPrenotazione.IN_ATTESA) {
+                        setGraphic(button);
+                    } else {
+                        setGraphic(null); // Fa scomparire i bottoni se è accettata o rifiutata!
+                    }
                 }
             }
         };
     }
 
     private void gestisciPrenotazione(PrenotazioneBean prenotazione, boolean isAccept) {
-        if (isAccept) {
-            System.out.println("Hai ACCETTATO la prenotazione di: " + prenotazione.getEmailPasseggero());
-            // Qui andrà: prenotazioneController.accettaPrenotazione(...)
-        } else {
-            System.out.println("Hai RIFIUTATO la prenotazione di: " + prenotazione.getEmailPasseggero());
-            // Qui andrà: prenotazioneController.rifiutaPrenotazione(...)
+        try {
+            if (isAccept) {
+                // Catturiamo il boolean dal controller
+                boolean autoPiena = prenotazioneController.accettaPrenotazione(prenotazione);
+
+                if (autoPiena) {
+                    // --- FINESTRA OVERBOOKING (ULTIMO POSTO) ---
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Viaggio al completo!");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Siccome tutti i posti sono occupati, le richieste rimanenti sono state rifiutate in automatico dal sistema.");
+                    alert.showAndWait();
+                } else {
+                    // --- FINESTRA DI SUCCESSO ACCETTAZIONE CLASSICA ---
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Richiesta Accettata");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Hai accettato a bordo " + prenotazione.getEmailPasseggero() + "!");
+                    alert.showAndWait();
+                }
+            } else {
+                prenotazioneController.rifiutaPrenotazione(prenotazione);
+                // --- FINESTRA DI CONFERMA RIFIUTO ---
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Richiesta Rifiutata");
+                alert.setHeaderText(null);
+                alert.setContentText("Hai rifiutato la richiesta di " + prenotazione.getEmailPasseggero() + ".");
+                alert.showAndWait();
+            }
+            caricaRichieste(); // Ricarica la tabella, facendo sparire i bottoni all'istante
+        } catch (Exception e) {
+            System.err.println("Errore durante la gestione: " + e.getMessage());
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore");
+            alert.setHeaderText(null);
+            alert.setContentText("Si è verificato un problema: " + e.getMessage());
+            alert.showAndWait();
         }
-        caricaRichieste(); // Ricarica la tabella per aggiornarla
     }
 
     // METODO OBSERVER (Scatta se qualcuno si prenota mentre stai guardando questa pagina)

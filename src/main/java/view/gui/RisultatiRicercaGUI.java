@@ -128,29 +128,31 @@ public class RisultatiRicercaGUI extends CommonGUI {
             beans.PrenotazioneBean prenotazioneBean = new beans.PrenotazioneBean();
             prenotazioneBean.setEmailPasseggero(emailPasseggero);
             prenotazioneBean.setIdViaggio(viaggioBean.getIdViaggio());
-            prenotazioneBean.setStato(utilities.enums.StatoPrenotazione.convertIntToState(2));
+
+            // --- ECCO LA MODIFICA! FORZIAMO LO STATO IN_ATTESA ---
+            prenotazioneBean.setStato(utilities.enums.StatoPrenotazione.IN_ATTESA);
             prenotazioneBean.setDataPrenotazione(java.time.LocalDateTime.now());
 
             // Inviamo al controller
             prenotationController.inviaRichiestaPrenotazione(prenotazioneBean);
 
-            // --- FINESTRA DI SUCCESSO (ALERT) ---
+            // --- FINESTRA DI SUCCESSO (TESTO AGGIORNATO) ---
             Alert alertConferma = new Alert(Alert.AlertType.INFORMATION);
-            alertConferma.setTitle("Prenotazione Confermata");
+            alertConferma.setTitle("Richiesta Inviata");
             alertConferma.setHeaderText(null);
-            alertConferma.setContentText("Hai prenotato con successo il viaggio verso " + viaggioBean.getArrivo() + "!\nI posti disponibili sono stati aggiornati.");
-            alertConferma.showAndWait(); // Il programma si mette in pausa qui finché l'utente non clicca OK
+            alertConferma.setContentText("Hai inviato con successo la richiesta per il viaggio verso " + viaggioBean.getArrivo() + "!\nAttendi che il guidatore accetti la tua prenotazione.");
+            alertConferma.showAndWait();
 
-            // L'utente ha cliccato OK, ora ricarichiamo la tabella per mostrare il -1 sui posti
+            // Ricarichiamo la tabella
             eseguiRicerca(null);
 
         } catch (Exception e) {
             e.printStackTrace();
-            // --- FINESTRA DI ERRORE (ALERT) ---
+            // --- FINESTRA DI ERRORE ---
             Alert alertErrore = new Alert(Alert.AlertType.ERROR);
             alertErrore.setTitle("Errore di Prenotazione");
             alertErrore.setHeaderText(null);
-            alertErrore.setContentText("Impossibile prenotare: " + e.getMessage());
+            alertErrore.setContentText("Impossibile inviare la richiesta: " + e.getMessage());
             alertErrore.showAndWait();
         }
     }

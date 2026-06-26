@@ -28,11 +28,10 @@ public class PrenotazioneManagerConcreteSubject extends Subject {
 
     // Ecco la parte "critica": la rimozione con lo stesso stile logico del suo
     public void removePrenotazioneReq(Prenotazione prenotazione) {
-        // Lui confronta Customer Email, Course Name, Giorno e Ora.
-        // Noi confrontiamo Email Passeggero e ID Viaggio (che identificano la prenotazione).
         reservationsReq.removeIf(p ->
                 p.getEmailPasseggero().equals(prenotazione.getEmailPasseggero()) &&
-                        p.getIdViaggio() == prenotazione.getIdViaggio()
+                        // Convertiamo in Stringa per un confronto antiproiettile!
+                        String.valueOf(p.getIdViaggio()).equals(String.valueOf(prenotazione.getIdViaggio()))
         );
         notifyObservers();
     }

@@ -8,6 +8,7 @@ import query.PrenotazioneQuery;
 import utilities.enums.StatoPrenotazione;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -90,6 +91,26 @@ public class PrenotazioneDAOSQL implements PrenotazioneDAO {
             PrenotazioneQuery.deletePrenotazione(conn, idPrenotazione);
         } catch (SQLException e) {
             throw new DbOperationException("Errore di connessione durante l'eliminazione", e);
+        }
+    }
+
+    // --- NUOVO METODO: GESTIONE OVERBOOKING ---
+    @Override
+    public void rifiutaAltreRichieste(int idViaggio) throws DbOperationException {
+        String query = "UPDATE prenotazione SET stato = ? WHERE viaggio_id = ? AND stato = ?";
+
+        try (Connection conn = ConnectionSQL.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            // Rifiutiamo (stato 3) le richieste che sono ancora IN_ATTESA (stato 1) per questo specifico viaggio
+            ps.setInt(1, StatoPrenotazione.RIFIUTATA.getId());
+            ps.setInt(2, idViaggio);
+            ps.setInt(3, StatoPrenotazione.IN_ATTESA.getId());
+
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DbOperationException("Errore di connessione durante il rifiuto automatico delle richieste (Overbooking)", e);
         }
     }
 
