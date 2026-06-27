@@ -8,8 +8,9 @@ import exceptions.NoResultException;
 import model.Recensione;
 import patterns.factory.BeanAndModelMapperFactory;
 import patterns.factory.FactoryDAO;
+import utilities.enums.StatoPrenotazione;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class RecensioneController {
@@ -19,27 +20,28 @@ public class RecensioneController {
 
     public RecensioneController() {
         this.factory = BeanAndModelMapperFactory.getInstance();
-        this.recensioneDAO = FactoryDAO.getRecensioneDAO(); // Assicurati di avere questo nella Factory
+        this.recensioneDAO = FactoryDAO.getRecensioneDAO();
     }
 
-    // L'utente lascia una recensione a fine viaggio
     public void lasciaRecensione(RecensioneBean recensioneBean) throws DbOperationException {
+        // Controllo di sicurezza lato controller prima di inserire
+        if (recensioneDAO.esisteRecensione(recensioneBean.getEmailAutore(), recensioneBean.getIdViaggio())) {
+            throw new DbOperationException("Hai già lasciato una recensione per questo viaggio!");
+        }
+
         Recensione recensione = factory.fromBeanToModel(recensioneBean, RecensioneBean.class);
 
         try {
-            // Salva la recensione nel DB
             recensioneDAO.inserisciRecensione(recensione);
         } catch (Exception e) {
             throw new DbOperationException("Errore durante il salvataggio della recensione: " + e.getMessage());
         }
     }
 
-    // Recupera tutte le recensioni ricevute da un utente (es. per calcolare la media nel suo profilo)
     public void visualizzaRecensioniRicevute(UtenteBean utenteBean, List<RecensioneBean> recensioniTrovate) throws NoResultException {
         recensioniTrovate.clear();
 
         try {
-            // Passiamo l'email (o l'identificativo) dell'utente per trovare le recensioni a lui destinate
             String emailDestinatario = utenteBean.getCredenziali().getEmail();
             List<Recensione> recensioniModel = recensioneDAO.trovaRecensioniRicevute(emailDestinatario);
 
@@ -57,5 +59,34 @@ public class RecensioneController {
         } catch (Exception e) {
             throw new NoResultException("Errore nel recupero delle recensioni: " + e.getMessage());
         }
+    }
+
+    // =========================================================================
+    // METODO MAGICO: Decide se sbloccare il bottone "Lascia Recensione" nella GUI
+    // =========================================================================
+    public boolean puoLasciareRecensione(String emailRecensore, int idViaggio, LocalDateTime dataOraViaggio, StatoPrenotazione statoPrenotazione) {
+
+        // 1. Il viaggio non è ancora avvenuto?
+        if (dataOraViaggio.isAfter(LocalDateTime.now())) {
+            return false;
+        }
+
+        // 2. La prenotazione non è andata a buon fine?
+        if (statoPrenotazione != StatoPrenotazione.CONFERMATA) {
+            return false;
+        }
+
+        // 3. Ha già recensito questo viaggio?
+        try {
+            if (recensioneDAO.esisteRecensione(emailRecensore, idViaggio)) {
+                return false;
+            }
+        } catch (DbOperationException e) {
+            System.err.println("Errore controllo spam: " + e.getMessage());
+            return false; // Nel dubbio, blocchiamo per sicurezza
+        }
+
+        // Se sopravvive a tutti i controlli, ha il diritto di recensire!
+        return true;
     }
 }

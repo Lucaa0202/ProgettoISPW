@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-// Importa i tuoi file corretti se i pacchetti sono leggermente diversi
 import utilities.other.mappers.MapperRegistration;
 import utilities.other.mappers.Session;
 import view.gui.LoginGUI;
@@ -100,9 +99,7 @@ public class Main extends Application {
     public void interfaceCLI() {
         System.out.println("Avvio interfaccia CLI in corso...");
 
-        // TODO: Qui inserirai il pattern StateMachine come ha fatto il tuo amico
-        // StateMachineConcrete context = new StateMachineConcrete();
-        // while(context.getCurrentState() != null) { context.goNext(); }
+
 
         System.out.println("Arrivederci!");
     }

@@ -6,16 +6,11 @@ import exceptions.DbOperationException;
 import java.util.List;
 
 public interface RecensioneDAO {
-
-    // Lascia una nuova recensione
     void inserisciRecensione(Recensione recensione) throws DbOperationException;
-
-    // Trova tutte le recensioni che un utente ha RICEVUTO (utile per mostrare il suo profilo)
     List<Recensione> trovaRecensioniRicevute(String emailRecensito) throws NoResultException;
-
-    // Trova tutte le recensioni associate a un viaggio specifico
     List<Recensione> trovaRecensioniPerViaggio(int idViaggio) throws NoResultException;
-
-    // (Opzionale/Avanzato) Calcola la media voti direttamente tramite una query SQL (es. SELECT AVG(voto)...)
     double calcolaMediaVoti(String emailRecensito) throws NoResultException;
+
+    // NUOVO: Metodo per controllare se l'utente ha già recensito questo viaggio!
+    boolean esisteRecensione(String emailRecensore, int idViaggio) throws DbOperationException;
 }

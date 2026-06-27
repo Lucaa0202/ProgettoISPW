@@ -54,8 +54,12 @@
                             <children>
                                 <TableView fx:id="tablePrenotati" prefHeight="420.0" prefWidth="740.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
-                                        <TableColumn fx:id="idViaggioPrenCol" prefWidth="370.0" text="ID Viaggio" />
-                                        <TableColumn fx:id="statoPrenCol" prefWidth="368.0" text="Stato Prenotazione" />
+                                        <!-- Ho ricalcolato le larghezze per far entrare la terza colonna -->
+                                        <TableColumn fx:id="idViaggioPrenCol" prefWidth="200.0" text="ID Viaggio" />
+                                        <TableColumn fx:id="statoPrenCol" prefWidth="300.0" text="Stato Prenotazione" />
+
+                                        <!-- NUOVA COLONNA RECENSIONE -->
+                                        <TableColumn fx:id="recensioneBtnCol" prefWidth="238.0" text="Azione" />
                                     </columns>
                                 </TableView>
                             </children>

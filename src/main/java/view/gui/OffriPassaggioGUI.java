@@ -6,6 +6,7 @@ import controller.GestioneViaggioController;
 import exceptions.NoResultException;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -27,7 +28,6 @@ public class OffriPassaggioGUI extends CommonGUI {
 
     private final GestioneViaggioController gestioneViaggioController = new GestioneViaggioController();
 
-    // Adesso partenza e arrivo sono ComboBox!
     @FXML private ComboBox<String> partenza;
     @FXML private ComboBox<String> arrivo;
     @FXML private DatePicker dataPartenza;
@@ -43,7 +43,20 @@ public class OffriPassaggioGUI extends CommonGUI {
         partenza.getItems().clear();
         arrivo.getItems().clear();
 
-        // 1. Popoliamo gli snodi principali per il Carpooling
+        // 1. BLOCCO DELLE DATE PASSATE NEL CALENDARIO
+        dataPartenza.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                // Se la data è precedente a oggi, la blocchiamo
+                if (date != null && date.isBefore(LocalDate.now())) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffcdd2;"); // Rosso chiaro per far capire che è inibita
+                }
+            }
+        });
+
+        // 2. Popoliamo gli snodi principali per il Carpooling
         String[] macroZone = {
                 "Città Universitaria",
                 "Stazione Termini",
@@ -57,7 +70,7 @@ public class OffriPassaggioGUI extends CommonGUI {
         partenza.getItems().addAll(macroZone);
         arrivo.getItems().addAll(macroZone);
 
-        // 2. Caricamento dinamico dei veicoli dell'utente dal DB
+        // 3. Caricamento dinamico dei veicoli dell'utente dal DB
         try {
             String emailUtente = session.getUser().getCredenziali().getEmail();
             List<VeicoloBean> veicoliUtente = new ArrayList<>();
