@@ -119,6 +119,10 @@ public class UtenteHomepageGUI extends CommonGUI implements Observer {
     protected void iMieiViaggi(MouseEvent event) {
         cambiaSchermata(event, "/org/example/view/iMieiViaggi.fxml", new IMieiViaggiGUI(session));
     }
+    @FXML
+    protected void gestisciInviti(MouseEvent event) {
+        cambiaSchermata(event, "/org/example/view/invitiRicevuti.fxml", new InvitiRicevutiGUI(session));
+    }
 
     @FXML
     protected void eseguiLogout(MouseEvent event) {

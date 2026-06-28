@@ -38,13 +38,19 @@
                             <effect><DropShadow height="15.0" radius="7.0" width="15.0"><color><Color opacity="0.4" /></color></DropShadow></effect>
                         </Button>
 
-                        <Button layoutX="110.0" layoutY="240.0" mnemonicParsing="false" onMouseClicked="#iMieiViaggi" prefHeight="80.0" prefWidth="250.0" style="-fx-background-color: #efefef; -fx-background-radius: 22px; -fx-cursor: hand;" text="I Miei Viaggi">
+                        <Button layoutX="110.0" layoutY="220.0" mnemonicParsing="false" onMouseClicked="#iMieiViaggi" prefHeight="80.0" prefWidth="250.0" style="-fx-background-color: #efefef; -fx-background-radius: 22px; -fx-cursor: hand;" text="I Miei Viaggi">
                             <font><Font name="Segoe UI Bold" size="18.0" /></font>
                             <effect><DropShadow height="15.0" radius="7.0" width="15.0"><color><Color opacity="0.4" /></color></DropShadow></effect>
                         </Button>
 
-                        <Button layoutX="400.0" layoutY="240.0" mnemonicParsing="false" onMouseClicked="#vaiAggiungiVeicolo" prefHeight="80.0" prefWidth="250.0" style="-fx-background-color: #efefef; -fx-background-radius: 22px; -fx-cursor: hand;" text="Aggiungi Auto">
+                        <Button layoutX="400.0" layoutY="220.0" mnemonicParsing="false" onMouseClicked="#vaiAggiungiVeicolo" prefHeight="80.0" prefWidth="250.0" style="-fx-background-color: #efefef; -fx-background-radius: 22px; -fx-cursor: hand;" text="Aggiungi Auto">
                             <font><Font name="Segoe UI Bold" size="18.0" /></font>
+                            <effect><DropShadow height="15.0" radius="7.0" width="15.0"><color><Color opacity="0.4" /></color></DropShadow></effect>
+                        </Button>
+
+                        <!-- NUOVO BOTTONE DEGLI INVITI -->
+                        <Button layoutX="255.0" layoutY="340.0" mnemonicParsing="false" onMouseClicked="#gestisciInviti" prefHeight="80.0" prefWidth="250.0" style="-fx-background-color: #e3f2fd; -fx-background-radius: 22px; -fx-cursor: hand; -fx-border-color: #2196F3; -fx-border-radius: 22px; -fx-border-width: 2px;" text="📩 Inviti Ricevuti" textFill="#1976d2">
+                            <font><Font name="Segoe UI Bold" size="20.0" /></font>
                             <effect><DropShadow height="15.0" radius="7.0" width="15.0"><color><Color opacity="0.4" /></color></DropShadow></effect>
                         </Button>
 

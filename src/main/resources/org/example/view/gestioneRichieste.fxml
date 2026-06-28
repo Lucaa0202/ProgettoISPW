@@ -34,5 +34,12 @@
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
+
+        <!-- NUOVO BOTTONE: INVITA PASSEGGERO -->
+        <Button layoutX="600.0" layoutY="530.0" mnemonicParsing="false" onMouseClicked="#apriPopUpInvito" prefHeight="35.0" prefWidth="170.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-cursor: hand;" text="Invita Passeggero">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Button>
     </children>
 </AnchorPane>

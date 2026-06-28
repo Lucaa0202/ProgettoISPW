@@ -89,4 +89,24 @@ public class RecensioneController {
         // Se sopravvive a tutti i controlli, ha il diritto di recensire!
         return true;
     }
+    // Aggiungi questo metodo nel tuo RecensioneController!
+    public void visualizzaRecensioniRicevute(String emailDestinatario, List<RecensioneBean> recensioniTrovate) throws NoResultException {
+        recensioniTrovate.clear();
+        try {
+            List<Recensione> recensioniModel = recensioneDAO.trovaRecensioniRicevute(emailDestinatario);
+
+            if (recensioniModel.isEmpty()) {
+                throw new NoResultException("Nessuna recensione trovata per questo utente.");
+            }
+
+            for (Recensione r : recensioniModel) {
+                RecensioneBean rBean = factory.fromModelToBean(r, Recensione.class);
+                recensioniTrovate.add(rBean);
+            }
+        } catch (NoResultException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new NoResultException("Errore nel recupero delle recensioni: " + e.getMessage());
+        }
+    }
 }

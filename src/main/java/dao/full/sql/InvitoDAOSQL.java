@@ -1,6 +1,5 @@
 package dao.full.sql;
 
-// Guarda gli import: ora sono esattamente quelli del tuo progetto!
 import dao.InvitoDAO;
 import model.Invito;
 import exceptions.DbOperationException;
@@ -16,9 +15,10 @@ import java.util.List;
 
 public class InvitoDAOSQL implements InvitoDAO {
 
-    private static final String ID = "id";
-    private static final String ID_VIAGGIO = "id_viaggio";
-    private static final String EMAIL_PASSEGGERO = "email_passeggero";
+    // NOMI DELLE COLONNE ALLINEATI AL TUO WORKBENCH
+    private static final String ID = "idInvito";
+    private static final String ID_VIAGGIO = "viaggio_id";
+    private static final String EMAIL_PASSEGGERO = "passeggero_email";
     private static final String STATO = "stato";
 
     @Override
@@ -55,6 +55,27 @@ public class InvitoDAOSQL implements InvitoDAO {
         } catch (SQLException e) {
             throw new DbOperationException("Errore di connessione durante la risposta all'invito", e);
         }
+    }
+
+    // =========================================================================
+    // NUOVO METODO: RESTITUISCE LA LISTA DI EMAIL DEI PASSEGGERI STORICI
+    // =========================================================================
+    public List<String> trovaStoricoPasseggeri(String emailGuidatore) throws NoResultException {
+        List<String> passeggeri = new ArrayList<>();
+        try (Connection conn = ConnectionSQL.getConnection();
+             ResultSet rs = InvitoQuery.retrieveStoricoPasseggeri(conn, emailGuidatore)) {
+
+            while (rs.next()) {
+                // Prende la prima colonna della query (che è passeggero_email)
+                passeggeri.add(rs.getString(1));
+            }
+            if (passeggeri.isEmpty()) {
+                throw new NoResultException("Nessun passeggero storico trovato.");
+            }
+        } catch (SQLException e) {
+            handleException(e);
+        }
+        return passeggeri;
     }
 
     // --- METODI PRIVATI DI UTILITY ---
