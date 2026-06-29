@@ -124,7 +124,8 @@ public class GestioneRichiesteGUI extends CommonGUI implements Observer {
             String emailGuidatore = utente.getCredenziali().getEmail();
 
             // 2. Chiediamo al Controller le email dello storico
-            List<String> storico = invitoController.recuperaStoricoPasseggeri(emailGuidatore);
+            // NUOVA RIGA: passiamo anche l'ID del viaggio per far funzionare il filtro!
+            List<String> storico = invitoController.recuperaStoricoPasseggeri(emailGuidatore, viaggioSelezionato.getIdViaggio());
 
             // 3. Disegniamo il Pop-up con la tendina
             Dialog<String> dialog = new Dialog<>();

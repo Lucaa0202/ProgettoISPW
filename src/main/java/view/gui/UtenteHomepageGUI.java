@@ -10,6 +10,7 @@ import patterns.observer.Observer;
 import patterns.observer.PrenotazioneManagerConcreteSubject;
 import model.Prenotazione;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
@@ -23,6 +24,36 @@ public class UtenteHomepageGUI extends CommonGUI implements Observer {
         super(session);
         PrenotazioneManagerConcreteSubject.getInstance().addObserver(this);
         this.update();
+    }
+    @FXML
+    public void initialize() {
+        // Questo metodo scatta in automatico appena si carica la Homepage!
+        Platform.runLater(() -> {
+            try {
+                beans.UtenteBean utente = (beans.UtenteBean) session.getUser();
+                if (utente == null) return;
+
+                String miaEmail = utente.getCredenziali().getEmail();
+                controller.InvitoController iController = new controller.InvitoController();
+                List<beans.InvitoBean> invitiInSospeso = new ArrayList<>();
+
+                // Controlla se ci sono inviti
+                iController.recuperaInvitiRicevuti(miaEmail, invitiInSospeso);
+
+                if (!invitiInSospeso.isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Nuovo Invito Ricevuto!");
+                    alert.setHeaderText("📩 Hai " + invitiInSospeso.size() + " nuovo/i invito/i in sospeso!");
+                    alert.setContentText("Un guidatore con cui hai viaggiato ti ha invitato per una nuova tratta.\nVai nella sezione 'Inviti Ricevuti' per rispondere!");
+                    alert.showAndWait();
+                }
+
+            } catch (exceptions.NoResultException e) {
+                // Se non ci sono inviti, non facciamo nulla (niente pop-up noioso)
+            } catch (Exception e) {
+                System.err.println("Errore caricamento inviti: " + e.getMessage());
+            }
+        });
     }
 
     // =========================================================================
