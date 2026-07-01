@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import utilities.other.mappers.MapperRegistration;
 import utilities.other.mappers.Session;
 import view.gui.LoginGUI;
+import view.commandline.LoginCLI; // <--- IMPORTANTE: Importa la nostra CLI
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -19,13 +20,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // 1. Registrazione dei mappers
-         MapperRegistration.registerMappers();
+        MapperRegistration.registerMappers();
 
         Scanner scanner = new Scanner(System.in);
         boolean validInput = false;
 
-        // Loop per far scegliere all'utente l'interfaccia
         while (!validInput) {
             try {
                 showMenu();
@@ -55,26 +54,18 @@ public class Main extends Application {
         launch(args);
     }
 
-    // --- METODO PER AVVIARE LA GRAFICA (GUI) ---q
     public void graphicInterface(Stage stage) throws IOException {
-        // Inizializza la Sessione
         Session session = new Session();
-
-        // NOTA: Il tuo amico usa FXMLPathConfig per leggere i percorsi da un file properties.
-        // Per ora usiamo il percorso diretto al nostro Login per fare il test. Lo aggiungeremo dopo.
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/view/login.fxml"));
-
-        // Inietta il controller esattamente come fa lui
         loader.setControllerFactory(c -> new LoginGUI(session));
 
         Parent rootParent = loader.load();
         Scene scene = new Scene(rootParent);
 
-        stage.setTitle("Carpooling App"); // Titolo personalizzato
+        stage.setTitle("Carpooling App");
         stage.setScene(scene);
         stage.setResizable(false);
 
-        // Aggiunge un filtro per chiudere l'app premendo ESCAPE (Stile del tuo amico)
         stage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 event.consume();
@@ -85,7 +76,6 @@ public class Main extends Application {
         stage.show();
     }
 
-    // --- METODO PER MOSTRARE IL MENU NEL TERMINALE ---
     public void showMenu() {
         System.out.println(" ");
         System.out.println("-------------- Carpooling App --------------");
@@ -95,12 +85,10 @@ public class Main extends Application {
         System.out.print("Scelta: ");
     }
 
-    // --- METODO PER AVVIARE IL TERMINALE (CLI) ---
+    // --- ORA IL TUO MAIN È COLLEGATO ALLA CLI ---
     public void interfaceCLI() {
-        System.out.println("Avvio interfaccia CLI in corso...");
-
-
-
+        LoginCLI loginCLI = new LoginCLI();
+        loginCLI.start();
         System.out.println("Arrivederci!");
     }
 }
